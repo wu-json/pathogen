@@ -3,6 +3,8 @@
     "borsh",
     "cdylib",
     "helloworld",
+    "keypair",
+    "Keypair",
     "lamports",
     "Parens",
     "pubkey",
