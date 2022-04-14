@@ -27,7 +27,7 @@ If this is your first time using the Solana CLI, you will need to generate a new
 solana-keygen new
 ```
 
-### Start local Solana cluster
+### Start local Solana cluster and logs
 
 This example connects to a local Solana cluster by default.
 
@@ -35,4 +35,25 @@ Start a local Solana cluster:
 
 ```bash
 solana-test-validator
+```
+
+To log transactions on the cluster, you can run the following:
+
+```bash
+solana logs
+```
+
+### Deploying the On-chain Program
+
+To deploy the on-chain program, run the following commands:
+
+```bash
+yarn build:program-rust
+solana program deploy dist/program/pathogen.so
+```
+
+Once the program is deployed, you can then run the client like so:
+
+```bash
+yarn start
 ```
