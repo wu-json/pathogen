@@ -17,7 +17,7 @@ export class Profile {
   country_code = '';
   weight = 0;
 
-  constructor(fields: ProfileFields | undefined) {
+  constructor(fields: ProfileFields | undefined = undefined) {
     if (fields) {
       this.age = fields.age;
       this.exercising = fields.exercising;
@@ -39,10 +39,38 @@ export class PathogenAccount {
   counter = 0;
   profiles: Profile[] = [];
 
-  constructor(fields: PathogenAccountFields | undefined) {
+  constructor(fields: PathogenAccountFields | undefined = undefined) {
     if (fields) {
       this.counter = fields.counter;
       this.profiles = fields.profiles;
     }
   }
 }
+
+export const PathogenSchema = new Map<any, any>([
+  [
+    PathogenAccount,
+    {
+      kind: 'struct',
+      fields: [
+        ['counter', 'u32'],
+        ['profiles', [Profile]],
+      ],
+    },
+  ],
+  [
+    Profile,
+    {
+      kind: 'struct',
+      fields: [
+        ['age', 'u8'],
+        ['exercising', 'u8'],
+        ['height', 'u8'],
+        ['occupation', 'string'],
+        ['state_code', 'string'],
+        ['country_code', 'string'],
+        ['weight', 'u8'],
+      ],
+    },
+  ],
+]);

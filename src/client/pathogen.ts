@@ -15,6 +15,7 @@ import fs from 'mz/fs';
 import path from 'path';
 import * as borsh from 'borsh';
 
+import { PathogenSchema, PathogenAccount } from './schema';
 import { getPayer, getRpcUrl, createKeypairFromFile } from './utils';
 
 /**
@@ -55,25 +56,6 @@ const PROGRAM_SO_PATH = path.join(PROGRAM_PATH, 'pathogen.so');
  * This file is created when running `solana program deploy dist/program/helloworld.so`
  */
 const PROGRAM_KEYPAIR_PATH = path.join(PROGRAM_PATH, 'pathogen-keypair.json');
-
-/**
- * The state of a greeting account managed by the hello world program
- */
-class PathogenAccount {
-  counter = 0;
-  constructor(fields: { counter: number } | undefined = undefined) {
-    if (fields) {
-      this.counter = fields.counter;
-    }
-  }
-}
-
-/**
- * Borsh schema definition for greeting accounts
- */
-const PathogenSchema = new Map([
-  [PathogenAccount, { kind: 'struct', fields: [['counter', 'u32']] }],
-]);
 
 /**
  * The expected size of each greeting account.
