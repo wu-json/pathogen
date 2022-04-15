@@ -57,3 +57,11 @@ Once the program is deployed, you can then run the client like so:
 ```bash
 yarn start
 ```
+
+### Airdrop SOL into your default account
+
+If your keypair account balance is zero request SOL from your local Solana cluster faucet:
+
+```bash
+solana airdrop 10
+```
