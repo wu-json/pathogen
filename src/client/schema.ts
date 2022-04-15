@@ -32,17 +32,13 @@ export class Profile {
 
 type PathogenAccountFields = {
   counter: number;
-  profiles: Profile[];
 };
 
 export class PathogenAccount {
   counter = 0;
-  profiles: Profile[] = [];
-
   constructor(fields: PathogenAccountFields | undefined = undefined) {
     if (fields) {
       this.counter = fields.counter;
-      this.profiles = fields.profiles;
     }
   }
 }
@@ -52,25 +48,7 @@ export const PathogenSchema = new Map<any, any>([
     PathogenAccount,
     {
       kind: 'struct',
-      fields: [
-        ['counter', 'u32'],
-        // ['profiles', [Profile]],
-      ],
+      fields: [['counter', 'u32']],
     },
   ],
-  // [
-  //   Profile,
-  //   {
-  //     kind: 'struct',
-  //     fields: [
-  //       ['age', 'u8'],
-  //       ['exercising', 'u8'],
-  //       ['height', 'u8'],
-  //       ['occupation', 'string'],
-  //       ['state_code', 'string'],
-  //       ['country_code', 'string'],
-  //       ['weight', 'u8'],
-  //     ],
-  //   },
-  // ],
 ]);
