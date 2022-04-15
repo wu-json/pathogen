@@ -45,7 +45,6 @@ pub fn process_instruction(
         state_code: "NJ".to_string(),
         country_code: "US".to_string(),
         weight: 126,
-
         infection_history: Vec::new(),
         latest_test_result: TestResult::Negative
     };
