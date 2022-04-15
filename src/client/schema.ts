@@ -54,23 +54,23 @@ export const PathogenSchema = new Map<any, any>([
       kind: 'struct',
       fields: [
         ['counter', 'u32'],
-        // ['profiles', [Profile]],
+        ['profiles', [Profile]],
       ],
     },
   ],
-  // [
-  //   Profile,
-  //   {
-  //     kind: 'struct',
-  //     fields: [
-  //       ['age', 'u8'],
-  //       ['exercising', 'u8'],
-  //       ['height', 'u8'],
-  //       ['occupation', 'string'],
-  //       ['state_code', 'string'],
-  //       ['country_code', 'string'],
-  //       ['weight', 'u8'],
-  //     ],
-  //   },
-  // ],
+  [
+    Profile,
+    {
+      kind: 'struct',
+      fields: [
+        ['age', 'u8'],
+        ['exercising', 'u8'],
+        ['height', 'u8'],
+        ['occupation', 'string'],
+        ['state_code', 'string'],
+        ['country_code', 'string'],
+        ['weight', 'u8'],
+      ],
+    },
+  ],
 ]);
