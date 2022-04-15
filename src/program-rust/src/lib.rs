@@ -37,16 +37,16 @@ pub fn process_instruction(
     }
 
     // test profile (REMOVE LATER)
-    let _profile = Profile {
-        age: 21,
-        exercising: true,
-        height: 172,
-        occupation: "Software Engineer".to_string(),
-        state_code: "NJ".to_string(),
-        country_code: "US".to_string(),
-        weight: 126,
-        // test_history: Vec::new(),
-    };
+    // let _profile = Profile {
+    //     age: 21,
+    //     exercising: true,
+    //     height: 172,
+    //     occupation: "Software Engineer".to_string(),
+    //     state_code: "NJ".to_string(),
+    //     country_code: "US".to_string(),
+    //     weight: 126,
+    //     // test_history: Vec::new(),
+    // };
 
     // Increment and store the number of times the account has been greeted
     let mut pathogen_account = PathogenAccount::try_from_slice(&account.data.borrow())?;
