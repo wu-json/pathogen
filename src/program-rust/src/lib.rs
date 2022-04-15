@@ -1,4 +1,7 @@
+mod profile;
+
 use borsh::{BorshDeserialize, BorshSerialize};
+use profile::Profile;
 use solana_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint,
@@ -13,6 +16,7 @@ use solana_program::{
 pub struct GreetingAccount {
     /// number of greetings
     pub counter: u32,
+    pub profiles: Vec<Profile>,
 }
 
 // Declare and export the program's entrypoint

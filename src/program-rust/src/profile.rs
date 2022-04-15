@@ -1,14 +1,19 @@
+use borsh::{BorshDeserialize, BorshSerialize};
+
+#[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub enum TestResult {
     Positive,
     Negative,
 }
 
+#[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct TestPoint {
     pub test_result: TestResult,
     pub test_date: String,
     pub test_location: String,
 }
 
+#[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct Profile {
     // unidentifiable biographical information
     pub age: u8,
