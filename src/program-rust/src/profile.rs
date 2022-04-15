@@ -19,6 +19,5 @@ pub struct Profile {
     pub weight: u8,
 
     // infection-specific information
-    pub infection_history: Vec<String>,
-    pub latest_test_result: String,
+    // pub test_history: Vec<String>,
 }

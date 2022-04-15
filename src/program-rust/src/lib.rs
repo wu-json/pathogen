@@ -36,8 +36,8 @@ pub fn process_instruction(
         return Err(ProgramError::IncorrectProgramId);
     }
 
-    // test profile
-    let profile = Profile {
+    // test profile (REMOVE LATER)
+    let _profile = Profile {
         age: 21,
         exercising: true,
         height: 172,
@@ -45,8 +45,7 @@ pub fn process_instruction(
         state_code: "NJ".to_string(),
         country_code: "US".to_string(),
         weight: 126,
-        infection_history: Vec::new(),
-        latest_test_result: "Negative".to_string(),
+        // test_history: Vec::new(),
     };
 
     // Increment and store the number of times the account has been greeted
