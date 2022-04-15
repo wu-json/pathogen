@@ -1,14 +1,8 @@
 use borsh::{BorshDeserialize, BorshSerialize};
 
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
-pub enum TestResult {
-    Positive,
-    Negative,
-}
-
-#[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct TestPoint {
-    pub test_result: TestResult,
+    pub test_result: String,
     pub test_date: String,
     pub test_location: String,
 }
@@ -25,6 +19,6 @@ pub struct Profile {
     pub weight: u8,
 
     // infection-specific information
-    pub infection_history: Vec<TestPoint>,
-    pub latest_test_result: TestResult,
+    pub infection_history: Vec<String>,
+    pub latest_test_result: String,
 }

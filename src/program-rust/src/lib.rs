@@ -3,7 +3,7 @@ mod profile;
 
 use borsh::{BorshDeserialize, BorshSerialize};
 use pathogen_account::PathogenAccount;
-use profile::{Profile, TestResult};
+use profile::Profile;
 use solana_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint,
@@ -46,7 +46,7 @@ pub fn process_instruction(
         country_code: "US".to_string(),
         weight: 126,
         infection_history: Vec::new(),
-        latest_test_result: TestResult::Negative
+        latest_test_result: "Negative".to_string(),
     };
 
     // Increment and store the number of times the account has been greeted
