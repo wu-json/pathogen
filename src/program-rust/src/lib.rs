@@ -3,6 +3,7 @@ mod profile;
 
 use borsh::{BorshDeserialize, BorshSerialize};
 use pathogen_account::PathogenAccount;
+use profile::{Profile, TestResult};
 use solana_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint,
@@ -34,6 +35,20 @@ pub fn process_instruction(
         msg!("Greeted account does not have the correct program id");
         return Err(ProgramError::IncorrectProgramId);
     }
+
+    // test profile
+    let profile = Profile {
+        age: 21,
+        exercising: true,
+        height: 172,
+        occupation: "Software Engineer".to_string(),
+        state_code: "NJ".to_string(),
+        country_code: "US".to_string(),
+        weight: 126,
+
+        infection_history: Vec::new(),
+        latest_test_result: TestResult::Negative
+    };
 
     // Increment and store the number of times the account has been greeted
     let mut pathogen_account = PathogenAccount::try_from_slice(&account.data.borrow())?;

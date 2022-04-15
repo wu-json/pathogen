@@ -18,10 +18,11 @@ pub struct Profile {
     // unidentifiable biographical information
     pub age: u8,
     pub exercising: bool,
-    pub height: String,
+    pub height: u8,
     pub occupation: String,
     pub state_code: String,
-    pub weight: String,
+    pub country_code: String,
+    pub weight: u8,
 
     // infection-specific information
     pub infection_history: Vec<TestPoint>,
