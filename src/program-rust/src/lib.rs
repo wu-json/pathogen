@@ -1,7 +1,8 @@
+mod pathogen_account;
 mod profile;
 
 use borsh::{BorshDeserialize, BorshSerialize};
-use profile::Profile;
+use pathogen_account::PathogenAccount;
 use solana_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint,
@@ -10,14 +11,6 @@ use solana_program::{
     program_error::ProgramError,
     pubkey::Pubkey,
 };
-
-/// Define the type of state stored in accounts
-#[derive(BorshSerialize, BorshDeserialize, Debug)]
-pub struct PathogenAccount {
-    /// number of greetings
-    pub counter: u32,
-    pub profiles: Vec<Profile>,
-}
 
 // Declare and export the program's entrypoint
 entrypoint!(process_instruction);
