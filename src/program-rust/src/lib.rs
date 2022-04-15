@@ -1,4 +1,9 @@
+mod pathogen_account;
+mod profile;
+
 use borsh::{BorshDeserialize, BorshSerialize};
+use pathogen_account::PathogenAccount;
+use profile::Profile;
 use solana_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint,
@@ -7,13 +12,6 @@ use solana_program::{
     program_error::ProgramError,
     pubkey::Pubkey,
 };
-
-/// Define the type of state stored in accounts
-#[derive(BorshSerialize, BorshDeserialize, Debug)]
-pub struct GreetingAccount {
-    /// number of greetings
-    pub counter: u32,
-}
 
 // Declare and export the program's entrypoint
 entrypoint!(process_instruction);
@@ -38,12 +36,24 @@ pub fn process_instruction(
         return Err(ProgramError::IncorrectProgramId);
     }
 
-    // Increment and store the number of times the account has been greeted
-    let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
-    greeting_account.counter += 1;
-    greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
+    // test profile (REMOVE LATER)
+    let _profile = Profile {
+        age: 21,
+        exercising: true,
+        height: 172,
+        occupation: "Software Engineer".to_string(),
+        state_code: "NJ".to_string(),
+        country_code: "US".to_string(),
+        weight: 126,
+        // test_history: Vec::new(),
+    };
 
-    msg!("Greeted {} time(s)!", greeting_account.counter);
+    // Increment and store the number of times the account has been greeted
+    let mut pathogen_account = PathogenAccount::try_from_slice(&account.data.borrow())?;
+    pathogen_account.counter += 1;
+    pathogen_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
+
+    msg!("Greeted {} time(s)!", pathogen_account.counter);
 
     Ok(())
 }
@@ -77,21 +87,21 @@ mod test {
         let accounts = vec![account];
 
         assert_eq!(
-            GreetingAccount::try_from_slice(&accounts[0].data.borrow())
+            PathogenAccount::try_from_slice(&accounts[0].data.borrow())
                 .unwrap()
                 .counter,
             0
         );
         process_instruction(&program_id, &accounts, &instruction_data).unwrap();
         assert_eq!(
-            GreetingAccount::try_from_slice(&accounts[0].data.borrow())
+            PathogenAccount::try_from_slice(&accounts[0].data.borrow())
                 .unwrap()
                 .counter,
             1
         );
         process_instruction(&program_id, &accounts, &instruction_data).unwrap();
         assert_eq!(
-            GreetingAccount::try_from_slice(&accounts[0].data.borrow())
+            PathogenAccount::try_from_slice(&accounts[0].data.borrow())
                 .unwrap()
                 .counter,
             2

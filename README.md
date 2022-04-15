@@ -49,13 +49,13 @@ To deploy the on-chain program, run the following commands:
 
 ```bash
 yarn build:program-rust
-solana program deploy dist/program/pathogen.so
+yarn deploy:program-rust
 ```
 
 Once the program is deployed, you can then run the client like so:
 
 ```bash
-yarn start
+yarn start:client
 ```
 
 ### Airdrop SOL into your default account

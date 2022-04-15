@@ -15,6 +15,7 @@ import fs from 'mz/fs';
 import path from 'path';
 import * as borsh from 'borsh';
 
+import { PathogenSchema, PathogenAccount } from './schema';
 import { getPayer, getRpcUrl, createKeypairFromFile } from './utils';
 
 /**
@@ -57,30 +58,11 @@ const PROGRAM_SO_PATH = path.join(PROGRAM_PATH, 'pathogen.so');
 const PROGRAM_KEYPAIR_PATH = path.join(PROGRAM_PATH, 'pathogen-keypair.json');
 
 /**
- * The state of a greeting account managed by the hello world program
- */
-class GreetingAccount {
-  counter = 0;
-  constructor(fields: { counter: number } | undefined = undefined) {
-    if (fields) {
-      this.counter = fields.counter;
-    }
-  }
-}
-
-/**
- * Borsh schema definition for greeting accounts
- */
-const GreetingSchema = new Map([
-  [GreetingAccount, { kind: 'struct', fields: [['counter', 'u32']] }],
-]);
-
-/**
  * The expected size of each greeting account.
  */
 const GREETING_SIZE = borsh.serialize(
-  GreetingSchema,
-  new GreetingAccount(),
+  PathogenSchema,
+  new PathogenAccount(),
 ).length;
 
 /**
@@ -163,7 +145,7 @@ export async function checkProgram(): Promise<void> {
   console.log(`Using program ${programId.toBase58()}`);
 
   // Derive the address (public key) of a greeting account from the program so that it's easy to find later.
-  const GREETING_SEED = 'hello';
+  const GREETING_SEED = 'hello-10';
   greetedPubkey = await PublicKey.createWithSeed(
     payer.publicKey,
     GREETING_SEED,
@@ -223,8 +205,8 @@ export async function reportGreetings(): Promise<void> {
     throw 'Error: cannot find the greeted account';
   }
   const greeting = borsh.deserialize(
-    GreetingSchema,
-    GreetingAccount,
+    PathogenSchema,
+    PathogenAccount,
     accountInfo.data,
   );
   console.log(
