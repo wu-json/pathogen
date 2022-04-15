@@ -59,7 +59,7 @@ const PROGRAM_KEYPAIR_PATH = path.join(PROGRAM_PATH, 'pathogen-keypair.json');
 /**
  * The state of a greeting account managed by the hello world program
  */
-class GreetingAccount {
+class PathogenAccount {
   counter = 0;
   constructor(fields: { counter: number } | undefined = undefined) {
     if (fields) {
@@ -71,16 +71,16 @@ class GreetingAccount {
 /**
  * Borsh schema definition for greeting accounts
  */
-const GreetingSchema = new Map([
-  [GreetingAccount, { kind: 'struct', fields: [['counter', 'u32']] }],
+const PathogenSchema = new Map([
+  [PathogenAccount, { kind: 'struct', fields: [['counter', 'u32']] }],
 ]);
 
 /**
  * The expected size of each greeting account.
  */
 const GREETING_SIZE = borsh.serialize(
-  GreetingSchema,
-  new GreetingAccount(),
+  PathogenSchema,
+  new PathogenAccount(),
 ).length;
 
 /**
@@ -223,8 +223,8 @@ export async function reportGreetings(): Promise<void> {
     throw 'Error: cannot find the greeted account';
   }
   const greeting = borsh.deserialize(
-    GreetingSchema,
-    GreetingAccount,
+    PathogenSchema,
+    PathogenAccount,
     accountInfo.data,
   );
   console.log(
