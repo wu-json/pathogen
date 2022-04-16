@@ -1,7 +1,9 @@
 mod accounts;
+mod errors;
 
 use accounts::Pathogen;
 use anchor_lang::prelude::*;
+use errors::CreatePathogenErrorCode;
 
 declare_id!("CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh");
 
@@ -17,6 +19,13 @@ pub mod pathogen {
         let pathogen: &mut Account<Pathogen> = &mut ctx.accounts.pathogen;
         let creator: &Signer = &ctx.accounts.creator;
         let clock: Clock = Clock::get().unwrap();
+
+        if name.chars().count() > 50 {
+            return Err(CreatePathogenErrorCode::NameTooLong.into());
+        }
+        if code.chars().count() > 25 {
+            return Err(CreatePathogenErrorCode::CodeTooLong.into());
+        }
 
         pathogen.creator = *creator.key;
         pathogen.created_at = clock.unix_timestamp;
