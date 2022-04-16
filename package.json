@@ -2,6 +2,7 @@
   "license": "MIT",
   "scripts": {
     "anchor:build-and-deploy": "anchor build && anchor deploy",
+    "anchor:build-deploy-test": "anchor test",
     "anchor:test": "anchor run test",
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
     "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
