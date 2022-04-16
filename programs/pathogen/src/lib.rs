@@ -16,7 +16,9 @@ pub mod pathogen {
 
 #[derive(Accounts)]
 pub struct CreatePathogen<'info> {
+    #[account(init, payer = creator, space = Pathogen::LEN)]
     pub pathogen: Account<'info, Pathogen>,
-    pub author: Signer<'info>,
-    pub system_program: AccountInfo<'info>,
+    #[account(mut)]
+    pub creator: Signer<'info>,
+    pub system_program: Program<'info, System>,
 }
