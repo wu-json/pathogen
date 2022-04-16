@@ -8,7 +8,7 @@ Senior thesis project for using Solana to store public health data. More updates
 - Install yarn
 - Install Rust v1.56.1 or later from [https://rustup.rs/](https://rustup.rs/)
 - Install Solana v1.8.14 or later from [https://docs.solana.com/cli/install-solana-cli-tools](https://docs.solana.com/cli/install-solana-cli-tools)
-- Install Anchor from [https://project-serum.github.io/anchor/getting-started/installation.html#install-anchor](https://project-serum.github.io/anchor/getting-started/installation.html#install-anchor)
+- Install Anchor v0.24.2 or later from [https://project-serum.github.io/anchor/getting-started/installation.html#install-anchor](https://project-serum.github.io/anchor/getting-started/installation.html#install-anchor)
 
 ### Configure CLI
 
