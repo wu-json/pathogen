@@ -35,7 +35,11 @@ This example connects to a local Solana cluster by default.
 Start a local Solana cluster:
 
 ```bash
+# Runs local cluster.
 solana-test-validator
+
+# Runs fresh local cluster.
+solana-test-validator --reset
 ```
 
 To log transactions on the cluster, you can run the following:
