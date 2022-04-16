@@ -1,9 +1,9 @@
-mod accounts;
 mod errors;
+mod schemas;
 
-use accounts::Pathogen;
 use anchor_lang::prelude::*;
 use errors::CreatePathogenErrorCode;
+use schemas::Pathogen;
 
 declare_id!("CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh");
 
@@ -11,11 +11,7 @@ declare_id!("CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh");
 pub mod pathogen {
     use super::*;
 
-    pub fn create_pathogen(
-        ctx: Context<CreatePathogen>,
-        name: String,
-        code: String,
-    ) -> ProgramResult {
+    pub fn create_pathogen(ctx: Context<CreatePathogen>, name: String, code: String) -> Result<()> {
         let pathogen: &mut Account<Pathogen> = &mut ctx.accounts.pathogen;
         let creator: &Signer = &ctx.accounts.creator;
         let clock: Clock = Clock::get().unwrap();

@@ -1,3 +1,5 @@
+use anchor_lang::prelude::*;
+
 // 1. Account structs
 #[account]
 pub struct Pathogen {
@@ -34,7 +36,7 @@ const LATEST_TEST_RESULT_LENGTH: usize = 25 * 4; // 25 chars max
 
 // 3. Total size implementations
 impl Pathogen {
-    const LEN: usize = DISCRIMINATOR_LENGTH
+    pub const LEN: usize = DISCRIMINATOR_LENGTH
         + PUBLIC_KEY_LENGTH // Creator
         + (STRING_LENGTH_PREFIX + MAX_NAME_LENGTH) // Name
         + (STRING_LENGTH_PREFIX + MAX_CODE_LENGTH) // Code
@@ -43,7 +45,7 @@ impl Pathogen {
 }
 
 impl Profile {
-    const LEN: usize = DISCRIMINATOR_LENGTH
+    pub const LEN: usize = DISCRIMINATOR_LENGTH
         + PUBLIC_KEY_LENGTH // Creator
         + AGE_LENGTH // Age
         + (STRING_LENGTH_PREFIX + LATEST_TEST_RESULT_LENGTH)  // Latest test result
