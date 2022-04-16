@@ -1,7 +1,7 @@
 [features]
 seeds = false
 [programs.localnet]
-pathogen = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+pathogen = "CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh"
 
 [registry]
 url = "https://anchor.projectserum.com"
