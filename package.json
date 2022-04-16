@@ -1,4 +1,5 @@
 {
+  "license": "MIT",
   "scripts": {
     "anchor:build-and-deploy": "anchor build && anchor deploy",
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
