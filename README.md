@@ -46,7 +46,7 @@ solana logs
 
 ### Deploying the On-chain Program
 
-To deploy the on-chain program, run the following command:
+To deploy the on-chain program, run the following command. Note that the local Solana cluster must be running for the deploy step to work.
 
 ```bash
 anchor build && anchor deploy
