@@ -46,17 +46,10 @@ solana logs
 
 ### Deploying the On-chain Program
 
-To deploy the on-chain program, run the following commands:
+To deploy the on-chain program, run the following command:
 
 ```bash
-yarn build:program-rust
-yarn deploy:program-rust
-```
-
-Once the program is deployed, you can then run the client like so:
-
-```bash
-yarn start:client
+anchor build && anchor deploy
 ```
 
 ### Airdrop SOL into your default account
