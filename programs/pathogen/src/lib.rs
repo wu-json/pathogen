@@ -1,3 +1,6 @@
+mod accounts;
+
+use accounts::Pathogen;
 use anchor_lang::prelude::*;
 
 declare_id!("CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh");
@@ -12,4 +15,8 @@ pub mod pathogen {
 }
 
 #[derive(Accounts)]
-pub struct Initialize {}
+pub struct CreatePathogen<'info> {
+    pub pathogen: Account<'info, Pathogen>,
+    pub author: Signer<'info>,
+    pub system_program: AccountInfo<'info>,
+}
