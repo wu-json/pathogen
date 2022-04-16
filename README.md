@@ -53,7 +53,15 @@ solana logs
 To deploy the on-chain program, run the following command. Note that the local Solana cluster must be running for the deploy step to work.
 
 ```bash
-anchor build && anchor deploy
+yarn anchor:build-and-deploy
+```
+
+### Accessing Deployed Program ID
+
+Once the program has been deployed to your local Solana cluster, you can get the program id like so:
+
+```bash
+yarn solana:program-id
 ```
 
 ### Airdrop SOL into your default account
