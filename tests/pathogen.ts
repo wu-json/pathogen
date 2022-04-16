@@ -1,16 +1,41 @@
 import * as anchor from "@project-serum/anchor";
 import { Program } from "@project-serum/anchor";
+import * as assert from "assert";
 import { Pathogen } from "../target/types/pathogen";
 
 describe("pathogen", () => {
   // Configure the client to use the local cluster.
-  anchor.setProvider(anchor.AnchorProvider.env());
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
 
   const program = anchor.workspace.Pathogen as Program<Pathogen>;
 
-  it("Is initialized!", async () => {
-    // Add your test here.
-    const tx = await program.methods.initialize().rpc();
-    console.log("Your transaction signature", tx);
+  describe("create_pathogen", () => {
+    it("should create a pathogen", async () => {
+      const pathogen = anchor.web3.Keypair.generate();
+      await program.methods
+        .createPathogen("Coronavirus disease 2019", "covid-19")
+        .accounts({
+          pathogen: pathogen.publicKey,
+          creator: provider.wallet.publicKey,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .signers([pathogen])
+        .rpc();
+
+      // Fetch the account details of the created tweet.
+      const pathogenAccount = await program.account.pathogen.fetch(
+        pathogen.publicKey
+      );
+
+      assert.equal(
+        pathogenAccount.creator.toBase58(),
+        provider.wallet.publicKey.toBase58()
+      );
+      assert.equal(pathogenAccount.name, "Coronavirus disease 2019");
+      assert.equal(pathogenAccount.code, "covid-19");
+      assert.equal(pathogenAccount.totalProfiles, 0);
+      assert.ok(pathogenAccount.createdAt);
+    });
   });
 });
