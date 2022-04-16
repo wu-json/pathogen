@@ -37,5 +37,43 @@ describe("pathogen", () => {
       assert.equal(pathogenAccount.totalProfiles, 0);
       assert.ok(pathogenAccount.createdAt);
     });
+
+    it("cannot create a pathogen without a name", async () => {
+      try {
+        const pathogen = anchor.web3.Keypair.generate();
+        await program.methods
+          .createPathogen("", "covid-19")
+          .accounts({
+            pathogen: pathogen.publicKey,
+            creator: provider.wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([pathogen])
+          .rpc();
+      } catch (error) {
+        assert.equal(error.error.errorMessage, "The provided name is empty.");
+        return;
+      }
+      assert.fail("The instruction should have failed without a name.");
+    });
+
+    it("cannot create a pathogen without a code", async () => {
+      try {
+        const pathogen = anchor.web3.Keypair.generate();
+        await program.methods
+          .createPathogen("Coronavirus disease 2019", "")
+          .accounts({
+            pathogen: pathogen.publicKey,
+            creator: provider.wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([pathogen])
+          .rpc();
+      } catch (error) {
+        assert.equal(error.error.errorMessage, "The provided code is empty.");
+        return;
+      }
+      assert.fail("The instruction should have failed without a code.");
+    });
   });
 });
