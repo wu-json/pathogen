@@ -5,6 +5,7 @@ pub struct Pathogen {
     pub name: String,
     pub code: String,
     pub total_profiles: u64,
+    pub created_at: i64,
 }
 
 #[account]
@@ -37,7 +38,8 @@ impl Pathogen {
         + PUBLIC_KEY_LENGTH // Creator
         + (STRING_LENGTH_PREFIX + MAX_NAME_LENGTH) // Name
         + (STRING_LENGTH_PREFIX + MAX_CODE_LENGTH) // Code
-        + TOTAL_PROFILES_LENGTH; // Total profiles
+        + TOTAL_PROFILES_LENGTH // Total profiles
+        + TIMESTAMP_LENGTH; // Created at
 }
 
 impl Profile {
@@ -45,5 +47,5 @@ impl Profile {
         + PUBLIC_KEY_LENGTH // Creator
         + AGE_LENGTH // Age
         + (STRING_LENGTH_PREFIX + LATEST_TEST_RESULT_LENGTH)  // Latest test result
-        + (STRING_LENGTH_PREFIX + TIMESTAMP_LENGTH); // Latest test result date
+        + TIMESTAMP_LENGTH; // Latest test result date
 }
