@@ -75,5 +75,51 @@ describe("pathogen", () => {
       }
       assert.fail("The instruction should have failed without a code.");
     });
+
+    it("cannot create a pathogen with a name greater than 50 characters", async () => {
+      const name = "x".repeat(51);
+      try {
+        const pathogen = anchor.web3.Keypair.generate();
+        await program.methods
+          .createPathogen(name, "covid-19")
+          .accounts({
+            pathogen: pathogen.publicKey,
+            creator: provider.wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([pathogen])
+          .rpc();
+      } catch (error) {
+        assert.equal(
+          error.error.errorMessage,
+          "The provided name should be 50 characters long maximum."
+        );
+        return;
+      }
+      assert.fail("The instruction should have failed with a long name.");
+    });
+
+    it("cannot create a pathogen with a code greater than 25 characters", async () => {
+      const code = "x".repeat(26);
+      try {
+        const pathogen = anchor.web3.Keypair.generate();
+        await program.methods
+          .createPathogen("Coronavirus disease 2019", code)
+          .accounts({
+            pathogen: pathogen.publicKey,
+            creator: provider.wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([pathogen])
+          .rpc();
+      } catch (error) {
+        assert.equal(
+          error.error.errorMessage,
+          "The provided code should be 25 characters long maximum."
+        );
+        return;
+      }
+      assert.fail("The instruction should have failed with a long code.");
+    });
   });
 });
