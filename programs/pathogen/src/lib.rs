@@ -16,8 +16,14 @@ pub mod pathogen {
         let creator: &Signer = &ctx.accounts.creator;
         let clock: Clock = Clock::get().unwrap();
 
+        if name.chars().count() == 0 {
+            return Err(CreatePathogenErrorCode::NameEmpty.into());
+        }
         if name.chars().count() > 50 {
             return Err(CreatePathogenErrorCode::NameTooLong.into());
+        }
+        if code.chars().count() == 0 {
+            return Err(CreatePathogenErrorCode::CodeEmpty.into());
         }
         if code.chars().count() > 25 {
             return Err(CreatePathogenErrorCode::CodeTooLong.into());
