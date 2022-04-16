@@ -16,7 +16,6 @@ pub struct Profile {
 }
 
 // 2. Sizing constants for determining space requirements
-
 // Shared
 const DISCRIMINATOR_LENGTH: usize = 8;
 const PUBLIC_KEY_LENGTH: usize = 32;
