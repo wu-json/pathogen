@@ -11,7 +11,7 @@ describe("pathogen", () => {
   const program = anchor.workspace.Pathogen as Program<Pathogen>;
 
   describe("create_pathogen", () => {
-    it("should create a pathogen", async () => {
+    it("can create a pathogen", async () => {
       const pathogen = anchor.web3.Keypair.generate();
       await program.methods
         .createPathogen("Coronavirus disease 2019", "covid-19")
@@ -31,6 +31,40 @@ describe("pathogen", () => {
       assert.equal(
         pathogenAccount.creator.toBase58(),
         provider.wallet.publicKey.toBase58()
+      );
+      assert.equal(pathogenAccount.name, "Coronavirus disease 2019");
+      assert.equal(pathogenAccount.code, "covid-19");
+      assert.equal(pathogenAccount.totalProfiles, 0);
+      assert.ok(pathogenAccount.createdAt);
+    });
+
+    it("can create a pathogen from a different creator", async () => {
+      const otherUser = anchor.web3.Keypair.generate();
+      const signature = await program.provider.connection.requestAirdrop(
+        otherUser.publicKey,
+        1000000000
+      );
+      await program.provider.connection.confirmTransaction(signature);
+
+      const pathogen = anchor.web3.Keypair.generate();
+      await program.methods
+        .createPathogen("Coronavirus disease 2019", "covid-19")
+        .accounts({
+          pathogen: pathogen.publicKey,
+          creator: otherUser.publicKey,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .signers([otherUser, pathogen])
+        .rpc();
+
+      // Fetch the account details of the created tweet.
+      const pathogenAccount = await program.account.pathogen.fetch(
+        pathogen.publicKey
+      );
+
+      assert.equal(
+        pathogenAccount.creator.toBase58(),
+        otherUser.publicKey.toBase58()
       );
       assert.equal(pathogenAccount.name, "Coronavirus disease 2019");
       assert.equal(pathogenAccount.code, "covid-19");
