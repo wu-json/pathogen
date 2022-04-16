@@ -2,6 +2,7 @@
   "license": "MIT",
   "scripts": {
     "anchor:build-and-deploy": "anchor build && anchor deploy",
+    "anchor:test": "anchor run test",
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
     "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
     "solana:program-id": "solana address -k target/deploy/pathogen-keypair.json"
