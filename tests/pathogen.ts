@@ -2,6 +2,7 @@ import * as anchor from "@project-serum/anchor";
 import { Program } from "@project-serum/anchor";
 import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import * as assert from "assert";
+import { BN } from "bn.js";
 import { Pathogen } from "../target/types/pathogen";
 
 describe("pathogen", () => {
@@ -24,7 +25,6 @@ describe("pathogen", () => {
         .signers([pathogen])
         .rpc();
 
-      // Fetch the account details of the created tweet.
       const pathogenAccount = await program.account.pathogen.fetch(
         pathogen.publicKey
       );
@@ -58,7 +58,6 @@ describe("pathogen", () => {
         .signers([otherUser, pathogen])
         .rpc();
 
-      // Fetch the account details of the created tweet.
       const pathogenAccount = await program.account.pathogen.fetch(
         pathogen.publicKey
       );
@@ -188,6 +187,54 @@ describe("pathogen", () => {
         return;
       }
       assert.fail("The instruction should have failed with a long code.");
+    });
+  });
+
+  describe("create_profile", () => {
+    const pathogen = anchor.web3.Keypair.generate();
+
+    before(async () => {
+      await program.methods
+        .createPathogen("covid-19", "Coronavirus disease 2019")
+        .accounts({
+          pathogen: pathogen.publicKey,
+          creator: provider.wallet.publicKey,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .signers([pathogen])
+        .rpc();
+    });
+
+    it("should create a profile", async () => {
+      const profile = anchor.web3.Keypair.generate();
+      const testDate = new Date("2022-02-03");
+
+      await program.methods
+        .createProfile("Positive", new BN(testDate.getTime()), 21)
+        .accounts({
+          pathogen: pathogen.publicKey,
+          profile: profile.publicKey,
+          creator: provider.wallet.publicKey,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .signers([profile])
+        .rpc();
+
+      const profileAccount = await program.account.profile.fetch(
+        profile.publicKey
+      );
+
+      assert.equal(
+        profileAccount.creator.toBase58(),
+        provider.wallet.publicKey.toBase58()
+      );
+      assert.equal(profileAccount.pathogen.toBase58(), pathogen.publicKey);
+      assert.equal(profileAccount.latestTestResult, "Positive");
+      assert.equal(
+        profileAccount.latestTestResultDate.toNumber(),
+        testDate.getTime()
+      );
+      assert.equal(profileAccount.age, 21);
     });
   });
 });
