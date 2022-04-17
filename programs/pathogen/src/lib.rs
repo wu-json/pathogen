@@ -3,7 +3,7 @@ mod schemas;
 
 use anchor_lang::prelude::*;
 use errors::CreatePathogenErrorCode;
-use schemas::Pathogen;
+use schemas::{Pathogen, Profile};
 
 declare_id!("CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh");
 
@@ -36,11 +36,38 @@ pub mod pathogen {
         pathogen.total_profiles = 0;
         Ok(())
     }
+
+    pub fn create_profile(
+        ctx: Context<CreateProfile>,
+        latest_test_result: String,
+        latest_test_result_date: i64,
+        age: u8,
+    ) -> Result<()> {
+        let profile: &mut Account<Profile> = &mut ctx.accounts.profile;
+        let creator: &Signer = &ctx.accounts.creator;
+
+        profile.creator = *creator.key;
+        profile.pathogen = ctx.accounts.pathogen.key();
+        profile.latest_test_result = latest_test_result;
+        profile.latest_test_result_date = latest_test_result_date;
+        profile.age = age;
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
 pub struct CreatePathogen<'info> {
     #[account(init, payer = creator, space = Pathogen::LEN)]
+    pub pathogen: Account<'info, Pathogen>,
+    #[account(mut)]
+    pub creator: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct CreateProfile<'info> {
+    #[account(init, payer = creator, space = Profile::LEN)]
+    pub profile: Account<'info, Profile>,
     pub pathogen: Account<'info, Pathogen>,
     #[account(mut)]
     pub creator: Signer<'info>,

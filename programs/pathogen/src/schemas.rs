@@ -13,9 +13,10 @@ pub struct Pathogen {
 #[account]
 pub struct Profile {
     pub creator: Pubkey,
-    pub age: u8,
+    pub pathogen: Pubkey,
     pub latest_test_result: String,
     pub latest_test_result_date: i64,
+    pub age: u8,
 }
 
 // 2. Sizing constants for determining space requirements
@@ -47,7 +48,8 @@ impl Pathogen {
 impl Profile {
     pub const LEN: usize = DISCRIMINATOR_LENGTH
         + PUBLIC_KEY_LENGTH // Creator
-        + AGE_LENGTH // Age
+        + PUBLIC_KEY_LENGTH // Pathogen
         + (STRING_LENGTH_PREFIX + LATEST_TEST_RESULT_LENGTH)  // Latest test result
-        + TIMESTAMP_LENGTH; // Latest test result date
+        + TIMESTAMP_LENGTH // Latest test result date
+        + AGE_LENGTH; // Age
 }
