@@ -95,8 +95,32 @@ describe("pathogen", () => {
       const pathogenAccounts = await program.account.pathogen.all([
         {
           memcmp: {
-            offset: 8 + 32 + 4,
+            offset:
+              8 + // Discriminator
+              32 + // Public key
+              4, // String prefix
             bytes: bs58.encode(Buffer.from("Corona")),
+          },
+        },
+      ]);
+      assert.equal(pathogenAccounts.length, 1);
+      assert.ok(
+        pathogenAccounts.every(
+          (pa) => pa.account.name === "Coronavirus disease 2019"
+        )
+      );
+    });
+
+    it("can filter pathogens by code", async () => {
+      const pathogenAccounts = await program.account.pathogen.all([
+        {
+          memcmp: {
+            offset:
+              8 + // Discriminator
+              32 + // Public key
+              (4 + 50 * 4) + // String Prefix + Name
+              4, // String prefix
+            bytes: bs58.encode(Buffer.from("covid-19")),
           },
         },
       ]);
