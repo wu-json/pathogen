@@ -2,7 +2,7 @@ mod errors;
 mod schemas;
 
 use anchor_lang::prelude::*;
-use errors::CreatePathogenErrorCode;
+use errors::{CreatePathogenErrorCode, CreateProfileErrorCode};
 use schemas::{Pathogen, Profile};
 
 declare_id!("CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh");
@@ -45,6 +45,13 @@ pub mod pathogen {
     ) -> Result<()> {
         let profile: &mut Account<Profile> = &mut ctx.accounts.profile;
         let creator: &Signer = &ctx.accounts.creator;
+
+        if latest_test_result.chars().count() == 0 {
+            return Err(CreateProfileErrorCode::TestResultEmpty.into());
+        }
+        if latest_test_result.chars().count() > 25 {
+            return Err(CreateProfileErrorCode::TestResultTooLong.into());
+        }
 
         profile.creator = *creator.key;
         profile.pathogen = ctx.accounts.pathogen.key();

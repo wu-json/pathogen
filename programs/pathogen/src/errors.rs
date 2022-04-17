@@ -11,3 +11,11 @@ pub enum CreatePathogenErrorCode {
     #[msg("The provided code is empty.")]
     CodeEmpty,
 }
+
+#[error_code]
+pub enum CreateProfileErrorCode {
+    #[msg("The provided test result should be 25 characters long maximum.")]
+    TestResultTooLong,
+    #[msg("The provided test result is empty.")]
+    TestResultEmpty,
+}

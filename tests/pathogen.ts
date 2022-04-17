@@ -205,7 +205,7 @@ describe("pathogen", () => {
         .rpc();
     });
 
-    it("should create a profile", async () => {
+    it("can create a profile", async () => {
       const profile = anchor.web3.Keypair.generate();
       const testDate = new Date("2022-02-03");
 
@@ -227,6 +227,45 @@ describe("pathogen", () => {
       assert.equal(
         profileAccount.creator.toBase58(),
         provider.wallet.publicKey.toBase58()
+      );
+      assert.equal(profileAccount.pathogen.toBase58(), pathogen.publicKey);
+      assert.equal(profileAccount.latestTestResult, "Positive");
+      assert.equal(
+        profileAccount.latestTestResultDate.toNumber(),
+        testDate.getTime()
+      );
+      assert.equal(profileAccount.age, 21);
+    });
+
+    it("can create a profile from a different creator", async () => {
+      const otherUser = anchor.web3.Keypair.generate();
+      const signature = await program.provider.connection.requestAirdrop(
+        otherUser.publicKey,
+        1000000000
+      );
+      await program.provider.connection.confirmTransaction(signature);
+
+      const profile = anchor.web3.Keypair.generate();
+      const testDate = new Date("2022-02-03");
+
+      await program.methods
+        .createProfile("Positive", new BN(testDate.getTime()), 21)
+        .accounts({
+          pathogen: pathogen.publicKey,
+          profile: profile.publicKey,
+          creator: otherUser.publicKey,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
+        .signers([profile, otherUser])
+        .rpc();
+
+      const profileAccount = await program.account.profile.fetch(
+        profile.publicKey
+      );
+
+      assert.equal(
+        profileAccount.creator.toBase58(),
+        otherUser.publicKey.toBase58()
       );
       assert.equal(profileAccount.pathogen.toBase58(), pathogen.publicKey);
       assert.equal(profileAccount.latestTestResult, "Positive");
