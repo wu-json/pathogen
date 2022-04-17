@@ -15,7 +15,7 @@ describe("pathogen", () => {
     it("can create a pathogen", async () => {
       const pathogen = anchor.web3.Keypair.generate();
       await program.methods
-        .createPathogen("Coronavirus disease 2019", "covid-19")
+        .createPathogen("covid-19", "Coronavirus disease 2019")
         .accounts({
           pathogen: pathogen.publicKey,
           creator: provider.wallet.publicKey,
@@ -33,8 +33,8 @@ describe("pathogen", () => {
         pathogenAccount.creator.toBase58(),
         provider.wallet.publicKey.toBase58()
       );
-      assert.equal(pathogenAccount.name, "Coronavirus disease 2019");
       assert.equal(pathogenAccount.code, "covid-19");
+      assert.equal(pathogenAccount.name, "Coronavirus disease 2019");
       assert.equal(pathogenAccount.totalProfiles, 0);
       assert.ok(pathogenAccount.createdAt);
     });
@@ -49,7 +49,7 @@ describe("pathogen", () => {
 
       const pathogen = anchor.web3.Keypair.generate();
       await program.methods
-        .createPathogen("Ebola virus disease", "ebola")
+        .createPathogen("ebola", "Ebola virus disease")
         .accounts({
           pathogen: pathogen.publicKey,
           creator: otherUser.publicKey,
@@ -67,8 +67,8 @@ describe("pathogen", () => {
         pathogenAccount.creator.toBase58(),
         otherUser.publicKey.toBase58()
       );
-      assert.equal(pathogenAccount.name, "Ebola virus disease");
       assert.equal(pathogenAccount.code, "ebola");
+      assert.equal(pathogenAccount.name, "Ebola virus disease");
       assert.equal(pathogenAccount.totalProfiles, 0);
       assert.ok(pathogenAccount.createdAt);
     });
@@ -91,26 +91,6 @@ describe("pathogen", () => {
       assert.equal(pathogenAccounts.length, 1);
     });
 
-    it("can filter pathogens by name", async () => {
-      const pathogenAccounts = await program.account.pathogen.all([
-        {
-          memcmp: {
-            offset:
-              8 + // Discriminator
-              32 + // Public key
-              4, // String prefix
-            bytes: bs58.encode(Buffer.from("Corona")),
-          },
-        },
-      ]);
-      assert.equal(pathogenAccounts.length, 1);
-      assert.ok(
-        pathogenAccounts.every(
-          (pa) => pa.account.name === "Coronavirus disease 2019"
-        )
-      );
-    });
-
     it("can filter pathogens by code", async () => {
       const pathogenAccounts = await program.account.pathogen.all([
         {
@@ -118,7 +98,6 @@ describe("pathogen", () => {
             offset:
               8 + // Discriminator
               32 + // Public key
-              (4 + 50 * 4) + // String Prefix + Name
               4, // String prefix
             bytes: bs58.encode(Buffer.from("covid-19")),
           },
@@ -131,7 +110,7 @@ describe("pathogen", () => {
       try {
         const pathogen = anchor.web3.Keypair.generate();
         await program.methods
-          .createPathogen("", "covid-19")
+          .createPathogen("covid-19", "")
           .accounts({
             pathogen: pathogen.publicKey,
             creator: provider.wallet.publicKey,
@@ -150,7 +129,7 @@ describe("pathogen", () => {
       try {
         const pathogen = anchor.web3.Keypair.generate();
         await program.methods
-          .createPathogen("Coronavirus disease 2019", "")
+          .createPathogen("", "Coronavirus disease 2019")
           .accounts({
             pathogen: pathogen.publicKey,
             creator: provider.wallet.publicKey,
@@ -170,7 +149,7 @@ describe("pathogen", () => {
       try {
         const pathogen = anchor.web3.Keypair.generate();
         await program.methods
-          .createPathogen(name, "covid-19")
+          .createPathogen("covid-19", name)
           .accounts({
             pathogen: pathogen.publicKey,
             creator: provider.wallet.publicKey,
@@ -193,7 +172,7 @@ describe("pathogen", () => {
       try {
         const pathogen = anchor.web3.Keypair.generate();
         await program.methods
-          .createPathogen("Coronavirus disease 2019", code)
+          .createPathogen(code, "Coronavirus disease 2019")
           .accounts({
             pathogen: pathogen.publicKey,
             creator: provider.wallet.publicKey,

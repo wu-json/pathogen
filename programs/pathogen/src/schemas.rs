@@ -4,8 +4,8 @@ use anchor_lang::prelude::*;
 #[account]
 pub struct Pathogen {
     pub creator: Pubkey,
-    pub name: String,
     pub code: String,
+    pub name: String,
     pub total_profiles: u64,
     pub created_at: i64,
 }
@@ -26,8 +26,8 @@ const STRING_LENGTH_PREFIX: usize = 4; // Stores the size of the string
 const TIMESTAMP_LENGTH: usize = 8;
 
 // Pathogen account size properties
-const MAX_NAME_LENGTH: usize = 50 * 4; // 50 chars max
 const MAX_CODE_LENGTH: usize = 25 * 4; // 25 chars max
+const MAX_NAME_LENGTH: usize = 50 * 4; // 50 chars max
 const TOTAL_PROFILES_LENGTH: usize = 8;
 
 // Profile account size properties
@@ -38,8 +38,8 @@ const LATEST_TEST_RESULT_LENGTH: usize = 25 * 4; // 25 chars max
 impl Pathogen {
     pub const LEN: usize = DISCRIMINATOR_LENGTH
         + PUBLIC_KEY_LENGTH // Creator
-        + (STRING_LENGTH_PREFIX + MAX_NAME_LENGTH) // Name
         + (STRING_LENGTH_PREFIX + MAX_CODE_LENGTH) // Code
+        + (STRING_LENGTH_PREFIX + MAX_NAME_LENGTH) // Name
         + TOTAL_PROFILES_LENGTH // Total profiles
         + TIMESTAMP_LENGTH; // Created at
 }
