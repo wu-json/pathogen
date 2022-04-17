@@ -77,6 +77,19 @@ describe("pathogen", () => {
       assert.equal(pathogenAccounts.length, 2);
     });
 
+    it("can filter pathogens by creator", async () => {
+      const creatorPublicKey = provider.wallet.publicKey;
+      const pathogenAccounts = await program.account.pathogen.all([
+        {
+          memcmp: {
+            offset: 8, // Discriminator
+            bytes: creatorPublicKey.toBase58(),
+          },
+        },
+      ]);
+      assert.equal(pathogenAccounts.length, 1);
+    });
+
     it("cannot create a pathogen without a name", async () => {
       try {
         const pathogen = anchor.web3.Keypair.generate();
