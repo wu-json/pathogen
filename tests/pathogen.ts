@@ -287,5 +287,79 @@ describe("pathogen", () => {
 
       assert.equal(pathogenAccount.totalProfiles, 2);
     });
+
+    it("can fetch all profiles", async () => {
+      const profileAccounts = await program.account.profile.all();
+      assert.equal(profileAccounts.length, 2);
+    });
+
+    it("can filter profiles by pathogen", async () => {
+      const profileAccounts = await program.account.profile.all([
+        {
+          memcmp: {
+            offset:
+              8 + // Discriminator
+              32, // Creator public key
+            bytes: pathogen.publicKey.toBase58(),
+          },
+        },
+      ]);
+      assert.equal(profileAccounts.length, 2);
+    });
+
+    it("cannot create a profile with a test result greater than 25 characters", async () => {
+      const testResult = "x".repeat(26);
+      try {
+        const profile = anchor.web3.Keypair.generate();
+        const testDate = new Date("2022-02-03");
+
+        await program.methods
+          .createProfile(testResult, new BN(testDate.getTime()), 21)
+          .accounts({
+            pathogen: pathogen.publicKey,
+            profile: profile.publicKey,
+            creator: provider.wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([profile])
+          .rpc();
+      } catch (error) {
+        assert.equal(
+          error.error.errorMessage,
+          "The provided test result should be 25 characters long maximum."
+        );
+        return;
+      }
+      assert.fail(
+        "The instruction should have failed with a long test result."
+      );
+    });
+
+    it("cannot create a profile with an empty test result", async () => {
+      try {
+        const profile = anchor.web3.Keypair.generate();
+        const testDate = new Date("2022-02-03");
+
+        await program.methods
+          .createProfile("", new BN(testDate.getTime()), 21)
+          .accounts({
+            pathogen: pathogen.publicKey,
+            profile: profile.publicKey,
+            creator: provider.wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([profile])
+          .rpc();
+      } catch (error) {
+        assert.equal(
+          error.error.errorMessage,
+          "The provided test result is empty."
+        );
+        return;
+      }
+      assert.fail(
+        "The instruction should have failed with an empty test result."
+      );
+    });
   });
 });
