@@ -1,5 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import { Program } from "@project-serum/anchor";
+import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import * as assert from "assert";
 import { Pathogen } from "../target/types/pathogen";
 
@@ -48,7 +49,7 @@ describe("pathogen", () => {
 
       const pathogen = anchor.web3.Keypair.generate();
       await program.methods
-        .createPathogen("Coronavirus disease 2019", "covid-19")
+        .createPathogen("Ebola virus disease", "ebola")
         .accounts({
           pathogen: pathogen.publicKey,
           creator: otherUser.publicKey,
@@ -66,8 +67,8 @@ describe("pathogen", () => {
         pathogenAccount.creator.toBase58(),
         otherUser.publicKey.toBase58()
       );
-      assert.equal(pathogenAccount.name, "Coronavirus disease 2019");
-      assert.equal(pathogenAccount.code, "covid-19");
+      assert.equal(pathogenAccount.name, "Ebola virus disease");
+      assert.equal(pathogenAccount.code, "ebola");
       assert.equal(pathogenAccount.totalProfiles, 0);
       assert.ok(pathogenAccount.createdAt);
     });
@@ -84,6 +85,18 @@ describe("pathogen", () => {
           memcmp: {
             offset: 8, // Discriminator
             bytes: creatorPublicKey.toBase58(),
+          },
+        },
+      ]);
+      assert.equal(pathogenAccounts.length, 1);
+    });
+
+    it("can filter pathogens by name", async () => {
+      const pathogenAccounts = await program.account.pathogen.all([
+        {
+          memcmp: {
+            offset: 8 + 32 + 4,
+            bytes: bs58.encode(Buffer.from("Corona")),
           },
         },
       ]);
