@@ -72,6 +72,11 @@ describe("pathogen", () => {
       assert.ok(pathogenAccount.createdAt);
     });
 
+    it("can fetch all pathogens", async () => {
+      const pathogenAccounts = await program.account.pathogen.all();
+      assert.equal(pathogenAccounts.length, 2);
+    });
+
     it("cannot create a pathogen without a name", async () => {
       try {
         const pathogen = anchor.web3.Keypair.generate();
