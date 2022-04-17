@@ -235,6 +235,12 @@ describe("pathogen", () => {
         testDate.getTime()
       );
       assert.equal(profileAccount.age, 21);
+
+      const pathogenAccount = await program.account.pathogen.fetch(
+        pathogen.publicKey
+      );
+
+      assert.equal(pathogenAccount.totalProfiles, 1);
     });
 
     it("can create a profile from a different creator", async () => {
@@ -274,6 +280,12 @@ describe("pathogen", () => {
         testDate.getTime()
       );
       assert.equal(profileAccount.age, 21);
+
+      const pathogenAccount = await program.account.pathogen.fetch(
+        pathogen.publicKey
+      );
+
+      assert.equal(pathogenAccount.totalProfiles, 2);
     });
   });
 });

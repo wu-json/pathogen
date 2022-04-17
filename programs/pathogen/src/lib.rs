@@ -44,6 +44,7 @@ pub mod pathogen {
         age: u8,
     ) -> Result<()> {
         let profile: &mut Account<Profile> = &mut ctx.accounts.profile;
+        let pathogen: &mut Account<Pathogen> = &mut ctx.accounts.pathogen;
         let creator: &Signer = &ctx.accounts.creator;
 
         if latest_test_result.chars().count() == 0 {
@@ -53,6 +54,7 @@ pub mod pathogen {
             return Err(CreateProfileErrorCode::TestResultTooLong.into());
         }
 
+        pathogen.total_profiles = pathogen.total_profiles + 1;
         profile.creator = *creator.key;
         profile.pathogen = ctx.accounts.pathogen.key();
         profile.latest_test_result = latest_test_result;
@@ -75,6 +77,7 @@ pub struct CreatePathogen<'info> {
 pub struct CreateProfile<'info> {
     #[account(init, payer = creator, space = Profile::LEN)]
     pub profile: Account<'info, Profile>,
+    #[account(mut)]
     pub pathogen: Account<'info, Pathogen>,
     #[account(mut)]
     pub creator: Signer<'info>,
