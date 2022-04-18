@@ -6,7 +6,36 @@ on:
     branches:
       - main
 jobs:
-  Build:
+  setup-anchor-cli:
+    name: Setup Anchor cli
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          rustup install stable
+          cargo --version
+          docker --version
+      - uses: actions/cache@v2
+        name: Cache Cargo registry + index
+        id: cache-anchor
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ./target/
+          key: cargo-${{ runner.os }}-anchor-${{ hashFiles('**/Cargo.lock') }}
+      - run: cargo install --path cli anchor-cli --locked --force
+      - run: chmod +x ~/.cargo/bin/anchor
+      - uses: actions/upload-artifact@v2
+        with:
+          name: anchor-binary
+          path: ~/.cargo/bin/anchor
+
+  build-and-test:
+    needs: setup-anchor-cli
     runs-on: ubuntu-20.04
     steps:
       - name: multiple paths
@@ -15,10 +44,6 @@ jobs:
           path: ~/.npm
           key: "${{ runner.os }}-${{ hashFiles('TODO') }}"
       - uses: actions/checkout@v2
-      - run: |
-          rustup install stable
-          cargo --version
-          docker --version
       - run: >-
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
       - run: >-
@@ -36,8 +61,6 @@ jobs:
           export PATH=~/.local/share/solana/install/active_release/bin:$PATH
           solana-install info
           solana-keygen new --no-bip39-passphrase
-      # - run: |
-      #     cargo install --git https://github.com/project-serum/anchor --tag v0.24.2 anchor-cli --locked
       - run: |
           yarn
       - run: |
