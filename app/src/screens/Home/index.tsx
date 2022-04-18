@@ -6,8 +6,8 @@ const Home = () => {
     <div className={styles['page-container']}>
       <div className={styles['header-wrapper']}>
         <div className={styles['header-container']}>
-          <img src={PathogenLogo} />
-          <div>
+          <img className={styles['logo']} src={PathogenLogo} />
+          <div className={styles['text-container']}>
             <h1>pathogen</h1>
             <h2>dApp for decentralized anonymous public health data</h2>
           </div>
