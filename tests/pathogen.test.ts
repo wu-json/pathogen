@@ -1,6 +1,7 @@
 import * as anchor from '@project-serum/anchor';
 import { Program } from '@project-serum/anchor';
 import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes';
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import * as assert from 'assert';
 import { BN } from 'bn.js';
 import { Pathogen } from '../target/types/pathogen';
@@ -12,14 +13,23 @@ describe('pathogen', () => {
 
   const program = anchor.workspace.Pathogen as Program<Pathogen>;
 
+  async function getAccountBalance(pubkey: anchor.web3.PublicKey) {
+    let account = await provider.connection.getAccountInfo(pubkey);
+    return account?.lamports ?? 0;
+  }
+
   describe('create_pathogen', () => {
     it('can create a pathogen', async () => {
+      const startingBalance = await getAccountBalance(
+        provider.wallet.publicKey,
+      );
+
       const pathogen = anchor.web3.Keypair.generate();
       await program.methods
         .createPathogen(
           'covid-19',
           'Coronavirus disease 2019',
-          new BN(100),
+          new BN(200 * LAMPORTS_PER_SOL),
           new BN(2),
         )
         .accounts({
@@ -34,6 +44,12 @@ describe('pathogen', () => {
         pathogen.publicKey,
       );
 
+      const endingBalance = await getAccountBalance(provider.wallet.publicKey);
+
+      assert.ok(startingBalance - endingBalance > 200 * LAMPORTS_PER_SOL);
+      assert.ok(
+        (await getAccountBalance(pathogen.publicKey)) > 200 * LAMPORTS_PER_SOL,
+      );
       assert.equal(
         pathogenAccount.creator.toBase58(),
         provider.wallet.publicKey.toBase58(),
@@ -49,13 +65,20 @@ describe('pathogen', () => {
       const otherUser = anchor.web3.Keypair.generate();
       const signature = await program.provider.connection.requestAirdrop(
         otherUser.publicKey,
-        1000000000,
+        50 * LAMPORTS_PER_SOL,
       );
       await program.provider.connection.confirmTransaction(signature);
 
+      const startingBalance = await getAccountBalance(otherUser.publicKey);
+
       const pathogen = anchor.web3.Keypair.generate();
       await program.methods
-        .createPathogen('ebola', 'Ebola virus disease', new BN(100), new BN(2))
+        .createPathogen(
+          'ebola',
+          'Ebola virus disease',
+          new BN(5 * LAMPORTS_PER_SOL),
+          new BN(2),
+        )
         .accounts({
           pathogen: pathogen.publicKey,
           creator: otherUser.publicKey,
@@ -68,6 +91,12 @@ describe('pathogen', () => {
         pathogen.publicKey,
       );
 
+      const endingBalance = await getAccountBalance(otherUser.publicKey);
+
+      assert.ok(startingBalance - endingBalance > 5 * LAMPORTS_PER_SOL);
+      assert.ok(
+        (await getAccountBalance(pathogen.publicKey)) > 5 * LAMPORTS_PER_SOL,
+      );
       assert.equal(
         pathogenAccount.creator.toBase58(),
         otherUser.publicKey.toBase58(),
