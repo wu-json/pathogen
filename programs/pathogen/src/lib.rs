@@ -120,7 +120,7 @@ pub struct CreatePathogen<'info> {
 pub struct CreateProfile<'info> {
     #[account(init, payer = creator, space = Profile::LEN)]
     pub profile: Account<'info, Profile>,
-    #[account(mut)]
+    #[account(mut, rent_exempt = enforce)]
     pub pathogen: Account<'info, Pathogen>,
     #[account(mut)]
     pub creator: Signer<'info>,
