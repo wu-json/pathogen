@@ -3,7 +3,10 @@
   "scripts": {
     "anchor:build-and-deploy": "anchor build && anchor deploy",
     "anchor:build-deploy-test": "anchor test",
+    "anchor:localnet": "anchor localnet",
     "anchor:test": "anchor run test",
+    "client:start": "cd app && yarn start",
+    "install:all": "yarn && cd app && yarn",
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
     "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
     "prepare": "husky install",

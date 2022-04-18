@@ -1,6 +1,6 @@
 # pathogen
 
-Senior thesis project for using Solana to store public health data. More updates coming soon...
+Pathogen is my senior thesis project, and is a Solana dApp for storing public health data. Organizations that need public health data for a certain disease can create pathogen bounties in SOL/lamports. Accounts can then submit their diagnostic data in exchange for shares of the bounty. Once I finish writing my thesis, I will link it somewhere in this ReadMe...
 
 ## Quick Start
 
@@ -10,7 +10,7 @@ Senior thesis project for using Solana to store public health data. More updates
 - Install Solana v1.8.14 or later from [https://docs.solana.com/cli/install-solana-cli-tools](https://docs.solana.com/cli/install-solana-cli-tools)
 - Install Anchor v0.24.2 or later from [https://project-serum.github.io/anchor/getting-started/installation.html#install-anchor](https://project-serum.github.io/anchor/getting-started/installation.html#install-anchor)
 
-### Configure CLI
+### Configure Solana CLI
 
 > If you're on Windows, it is recommended to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run these commands
 
@@ -28,17 +28,36 @@ If this is your first time using the Solana CLI, you will need to generate a new
 solana-keygen new
 ```
 
-### Start local Solana cluster and logs
+### Run the dApp
 
-This example connects to a local Solana cluster by default.
+To run the app, we need to install npm packages, run a local Solana cluster and deploy our dApp, and whip up a client instance:
+
+```bash
+# Installs npm packages for dApp and client app
+yarn install:all
+
+# Starts local Solana cluster + test validator and deploys app to it
+yarn anchor:localnet
+
+# Start the React client
+yarn client:start
+```
+
+Once you run all of the commands above, you should have Pathogen running on your local machine!
+
+## Other Dev Commands
+
+These aren't required to run Pathogen locally per se, but they are useful for development.
+
+### Start local Solana cluster and logs
 
 Start a local Solana cluster:
 
 ```bash
-# Runs local cluster.
+# Runs local cluster
 solana-test-validator
 
-# Runs fresh local cluster.
+# Runs fresh local cluster
 solana-test-validator --reset
 ```
 
