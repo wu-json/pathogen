@@ -13,11 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/setup/
-      - run: |
-          rustup install stable
-          rustup update
-          cargo --version
-          docker --version
       - uses: actions/cache@v2
         name: Cache Cargo registry + index
         id: cache-anchor
