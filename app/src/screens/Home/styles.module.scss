@@ -47,3 +47,18 @@
   line-height: 30px;
   color: var(--text-color);
 }
+
+@media only screen and (max-width: 800px) {
+  .logo {
+    height: 60px;
+    width: 60px;
+  }
+
+  .header-container {
+    padding: 0px 30px 0px 30px;
+  }
+
+  .text-container h1 {
+    font-size: 40px;
+  }
+}
