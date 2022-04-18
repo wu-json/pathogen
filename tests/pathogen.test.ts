@@ -141,6 +141,42 @@ describe('pathogen', () => {
       assert.equal(pathogenAccounts.length, 1);
     });
 
+    it('cannot create a pathogen with a bounty too big to cover', async () => {
+      try {
+        const otherUser = anchor.web3.Keypair.generate();
+        const signature = await program.provider.connection.requestAirdrop(
+          otherUser.publicKey,
+          10 * LAMPORTS_PER_SOL,
+        );
+        await program.provider.connection.confirmTransaction(signature);
+
+        const pathogen = anchor.web3.Keypair.generate();
+        await program.methods
+          .createPathogen(
+            'ebola',
+            'Ebola virus disease',
+            new BN(15 * LAMPORTS_PER_SOL),
+            new BN(2),
+          )
+          .accounts({
+            pathogen: pathogen.publicKey,
+            creator: otherUser.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([otherUser, pathogen])
+          .rpc();
+      } catch (error) {
+        assert.equal(
+          error.error.errorMessage,
+          'Not enough lamports to cover bounty.',
+        );
+        return;
+      }
+      assert.fail(
+        'The instruction should have failed with too large of a bounty.',
+      );
+    });
+
     it('cannot create a pathogen without a name', async () => {
       try {
         const pathogen = anchor.web3.Keypair.generate();

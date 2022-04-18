@@ -38,6 +38,9 @@ pub mod pathogen {
         if reward_per_profile > bounty {
             return Err(CreatePathogenErrorCode::RewardGreaterThanBounty.into());
         }
+        if bounty > **creator.to_account_info().lamports.borrow() {
+            return Err(CreatePathogenErrorCode::TooPoor.into());
+        }
 
         // move bounty into account
         if bounty > 0 {

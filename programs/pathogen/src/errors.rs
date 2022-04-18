@@ -12,6 +12,8 @@ pub enum CreatePathogenErrorCode {
     CodeEmpty,
     #[msg("The reward per profile must be less than the bounty.")]
     RewardGreaterThanBounty,
+    #[msg("Not enough lamports to cover bounty.")]
+    TooPoor,
 }
 
 #[error_code]
