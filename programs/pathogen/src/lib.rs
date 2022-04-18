@@ -93,6 +93,8 @@ pub mod pathogen {
         if remaining_sol > 0 {
             **pathogen.to_account_info().try_borrow_mut_lamports()? -= pathogen.reward_per_profile;
             **creator.to_account_info().try_borrow_mut_lamports()? += pathogen.reward_per_profile;
+        } else {
+            return Err(CreateProfileErrorCode::TooPoor.into());
         }
 
         pathogen.total_profiles = pathogen.total_profiles + 1;
