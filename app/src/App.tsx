@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import useStickyState from './hooks/useStickyState';
+import Home from './screens/Home';
 import setTheme from './styles/setTheme';
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<></>} />
+        <Route path='/' element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
