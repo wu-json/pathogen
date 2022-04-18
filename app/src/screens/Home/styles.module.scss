@@ -48,6 +48,10 @@
   color: var(--text-color);
 }
 
+.button {
+  margin-top: 10px;
+}
+
 @media only screen and (max-width: 800px) {
   .logo {
     height: 60px;
