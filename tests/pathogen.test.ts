@@ -280,8 +280,8 @@ describe('pathogen', () => {
         .createPathogen(
           'covid-19',
           'Coronavirus disease 2019',
-          new BN(100),
-          new BN(2),
+          new BN(100 * LAMPORTS_PER_SOL),
+          new BN(5 * LAMPORTS_PER_SOL),
         )
         .accounts({
           pathogen: pathogen.publicKey,
@@ -295,6 +295,13 @@ describe('pathogen', () => {
     it('can create a profile', async () => {
       const profile = anchor.web3.Keypair.generate();
       const testDate = new Date('2022-02-03');
+
+      const startingBalance = await getAccountBalance(
+        provider.wallet.publicKey,
+      );
+      const pathogenStartingBalance = await getAccountBalance(
+        pathogen.publicKey,
+      );
 
       await program.methods
         .createProfile('Positive', new BN(testDate.getTime()), 21)
@@ -311,6 +318,14 @@ describe('pathogen', () => {
         profile.publicKey,
       );
 
+      const endingBalance = await getAccountBalance(provider.wallet.publicKey);
+      const pathogenEndingBalance = await getAccountBalance(pathogen.publicKey);
+
+      assert.ok(endingBalance - startingBalance >= 4.9 * LAMPORTS_PER_SOL);
+      assert.ok(
+        pathogenStartingBalance - pathogenEndingBalance >=
+          4.9 * LAMPORTS_PER_SOL,
+      );
       assert.equal(
         profileAccount.creator.toBase58(),
         provider.wallet.publicKey.toBase58(),
