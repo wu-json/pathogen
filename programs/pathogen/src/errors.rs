@@ -10,6 +10,8 @@ pub enum CreatePathogenErrorCode {
     NameEmpty,
     #[msg("The provided code is empty.")]
     CodeEmpty,
+    #[msg("The reward per profile must be less than the bounty.")]
+    RewardGreaterThanBounty,
 }
 
 #[error_code]
