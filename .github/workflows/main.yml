@@ -45,6 +45,11 @@ jobs:
           path: ~/.npm
           key: "${{ runner.os }}-${{ hashFiles('TODO') }}"
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: anchor-binary
+          path: ~/.cargo/bin/
+      - run: chmod +rwx ~/.cargo/bin/anchor
       - run: >-
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
       - run: >-
