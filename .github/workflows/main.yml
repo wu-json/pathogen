@@ -37,7 +37,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/setup/
-      - uses: ./.github/actions/setup-ts/
       - uses: actions/cache@v2
         name: Cache Solana Tool Suite
         id: cache-solana
@@ -62,5 +61,5 @@ jobs:
           name: anchor-binary
           path: ~/.cargo/bin/
       - run: chmod +x ~/.cargo/bin/anchor
-      
+      - run: yarn
       - run: anchor test
