@@ -1,0 +1,10 @@
+@use 'src/styles/fonts.scss';
+
+.page-container {
+  overflow: auto;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
