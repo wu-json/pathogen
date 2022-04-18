@@ -22,4 +22,6 @@ pub enum CreateProfileErrorCode {
     TestResultTooLong,
     #[msg("The provided test result is empty.")]
     TestResultEmpty,
+    #[msg("Not enough lamports in pathogen bounty to cover reward.")]
+    TooPoor,
 }

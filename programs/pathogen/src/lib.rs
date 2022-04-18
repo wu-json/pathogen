@@ -84,6 +84,17 @@ pub mod pathogen {
             return Err(CreateProfileErrorCode::TestResultTooLong.into());
         }
 
+        // make sure pathogen account can cover profile reward
+        let pathogen_sol = **pathogen.to_account_info().lamports.borrow();
+        let remaining_sol = pathogen_sol
+            .checked_sub(pathogen.reward_per_profile)
+            .ok_or(CreateProfileErrorCode::TooPoor)?;
+
+        if remaining_sol > 0 {
+            **pathogen.to_account_info().try_borrow_mut_lamports()? -= pathogen.reward_per_profile;
+            **creator.to_account_info().try_borrow_mut_lamports()? += pathogen.reward_per_profile;
+        }
+
         pathogen.total_profiles = pathogen.total_profiles + 1;
         profile.creator = *creator.key;
         profile.pathogen = ctx.accounts.pathogen.key();
