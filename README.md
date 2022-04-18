@@ -30,7 +30,7 @@ solana-keygen new
 
 ### Run the dApp
 
-To run the app, we need to install npm packages, run a local Solana cluster and deploy our dApp, and whip up a client instance:
+To run Pathogen locally, we need to install npm packages, run a local Solana cluster and deploy our dApp, and whip up a client instance:
 
 ```bash
 # Installs npm packages for dApp and client app
