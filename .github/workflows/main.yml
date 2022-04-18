@@ -62,4 +62,5 @@ jobs:
           path: ~/.cargo/bin/
       - run: chmod +x ~/.cargo/bin/anchor
       - run: yarn
+      - run: chmod +x ci.sh && ./ci.sh
       - run: anchor test
