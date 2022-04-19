@@ -1,6 +1,6 @@
 # pathogen
 
-<img width="761" alt="Screen Shot 2022-04-18 at 1 15 46 PM" src="https://user-images.githubusercontent.com/45532884/163846005-0caad2d2-fa29-46e2-a198-e5b3ce1b598a.png">
+<img width="761" alt="Screen Shot 2022-04-18 at 4 07 08 PM" src="https://user-images.githubusercontent.com/45532884/163869927-82d88bb4-06e6-4a6e-b674-92db4ef36949.png">
 
 Pathogen is my senior thesis project, and is a Solana dApp for storing public health data. Organizations that need public health data for a certain disease can create pathogen bounties in SOL. Accounts can then submit their diagnostic data in exchange for shares of the bounty.
 
