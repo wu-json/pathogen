@@ -6,6 +6,7 @@
     "anchor:localnet": "anchor localnet",
     "anchor:test": "anchor run test",
     "client:start": "cd app && yarn start",
+    "copy:idl": "rm -rf app/src/idl && mkdir -p app/src/idl && cp target/idl/pathogen.json app/src/idl/pathogen.json",
     "install:all": "yarn && cd app && yarn",
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
     "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",

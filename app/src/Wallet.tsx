@@ -11,10 +11,11 @@ import { PropsWithChildren, useMemo } from 'react';
 // Default styles that can be overridden by your app
 require('@solana/wallet-adapter-react-ui/styles.css');
 
+const network = WalletAdapterNetwork.Devnet;
+
 const Wallet = (props: PropsWithChildren<{}>) => {
-  const network = WalletAdapterNetwork.Devnet;
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  const wallets = useMemo(() => [new PhantomWalletAdapter()], [network]);
+  const endpoint = useMemo(() => clusterApiUrl(network), []);
+  const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
 
   return (
     <ConnectionProvider endpoint={endpoint}>

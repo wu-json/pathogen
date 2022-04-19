@@ -3,7 +3,7 @@ import { AnchorWallet, useAnchorWallet } from '@solana/wallet-adapter-react';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { useMemo } from 'react';
 
-import idl from '../pathogen-idl.json';
+import idl from '../idl/pathogen.json';
 
 type Workspace = {
   wallet: AnchorWallet | null;
@@ -17,7 +17,7 @@ const netUrl =
     ? 'https://api.devnet.solana.com'
     : 'http://127.0.0.1:8899';
 
-const programID = new PublicKey(idl.metadata.address);
+const programID = new PublicKey((idl as any).metadata.address);
 const connection = new Connection(netUrl);
 
 const useWorkspace = (): Workspace => {
