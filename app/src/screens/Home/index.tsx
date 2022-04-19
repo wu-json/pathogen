@@ -10,7 +10,7 @@ const Home = () => {
     <div className={styles['page-container']}>
       <div className={styles['header-wrapper']}>
         <div className={styles['section-container']}>
-          <img src={PathogenLogo} />
+          <img src={PathogenLogo} alt='pathogen-logo' />
           <div className={styles['text-container']}>
             <h1>pathogen</h1>
             <h2>dApp for decentralized anonymous public health data</h2>
@@ -25,8 +25,8 @@ const Home = () => {
       <div className={styles['about-wrapper']}>
         <div className={styles['section-container']}>
           <div className={styles['logos-container']}>
-            <img src={SolanaLogo} />
-            <img src={AnchorLogo} />
+            <img src={SolanaLogo} alt='solana-logo' />
+            <img src={AnchorLogo} alt='anchor-logo' />
           </div>
           <div className={styles['about-text-container']}>
             <h1 className={styles['section-title']}>about</h1>
