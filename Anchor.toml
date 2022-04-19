@@ -1,6 +1,10 @@
 [features]
 seeds = false
+
 [programs.localnet]
+pathogen = "CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh"
+
+[programs.devnet]
 pathogen = "CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh"
 
 [registry]
