@@ -12,7 +12,7 @@ const usePathogens = () => {
     }
   }, [program]);
 
-  return pathogens;
+  return { pathogens, setPathogens };
 };
 
 export default usePathogens;

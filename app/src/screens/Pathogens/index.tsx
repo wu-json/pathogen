@@ -6,7 +6,7 @@ import Pathogen from './Pathogen';
 import styles from './styles.module.scss';
 
 const Pathogens = () => {
-  const pathogens = usePathogens();
+  const { pathogens } = usePathogens();
   return (
     <div className={styles['page-container']}>
       <WalletHeader />
