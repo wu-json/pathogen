@@ -27,15 +27,11 @@
   border-color: var(--gradient-left);
   background: var(--gradient-left);
 }
-.ant-btn:hover,
-.ant-btn:active,
-.ant-btn:focus {
+.ant-btn:hover {
   border-color: var(--gradient-left);
   color: var(--gradient-left);
 }
-.ant-btn-primary:hover,
-.ant-btn-primary:active,
-.ant-btn-primary:focus {
+.ant-btn-primary:hover {
   border-color: var(--gradient-left);
   background: var(--gradient-left);
   filter: brightness(80%);
