@@ -44,12 +44,12 @@ const Pathogens = () => {
         <Footer />
       </div>
       <Modal
-        title='Basic Modal'
+        title='Add Pathogen'
         visible={isModalVisible}
         onOk={() => setIsModalVisible(false)}
         onCancel={() => setIsModalVisible(false)}
       >
-        <p>hi</p>
+        <p>hello</p>
       </Modal>
     </>
   );

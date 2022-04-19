@@ -1,5 +1,46 @@
 @import '~antd/dist/antd.css';
 
+/* Modal */
+.ant-modal-header {
+  background: var(--bg-color);
+  border-color: var(--bg-color);
+}
+.ant-modal-title {
+  color: var(--text-color);
+}
+.ant-modal-close-x {
+  color: var(--text-color);
+}
+.ant-modal-close-x:hover {
+  filter: brightness(80%);
+}
+.ant-modal-content {
+  background: var(--bg-color);
+}
+.ant-modal-footer {
+  border-color: var(--bg-color);
+}
+
+/* Button */
+.ant-btn-primary {
+  color: #fff;
+  border-color: var(--gradient-left);
+  background: var(--gradient-left);
+}
+.ant-btn:hover,
+.ant-btn:active,
+.ant-btn:focus {
+  border-color: var(--gradient-left);
+  color: var(--gradient-left);
+}
+.ant-btn-primary:hover,
+.ant-btn-primary:active,
+.ant-btn-primary:focus {
+  border-color: var(--gradient-left);
+  background: var(--gradient-left);
+  filter: brightness(80%);
+}
+
 html,
 body {
   background: var(--bg-color);
