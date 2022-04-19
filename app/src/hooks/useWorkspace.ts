@@ -12,8 +12,13 @@ type Workspace = {
   program: Program | null;
 };
 
+const netUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://api.devnet.solana.com'
+    : 'http://127.0.0.1:8899';
+
 const programID = new PublicKey(idl.metadata.address);
-const connection = new Connection('http://127.0.0.1:8899');
+const connection = new Connection(netUrl);
 
 const useWorkspace = (): Workspace => {
   const wallet = useAnchorWallet();
