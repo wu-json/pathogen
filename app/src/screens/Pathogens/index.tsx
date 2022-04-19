@@ -1,5 +1,6 @@
 import { Input, InputNumber, Modal } from 'antd';
 import { useCallback, useState } from 'react';
+import Swal from 'sweetalert2';
 
 import PathogenLogo from '../../assets/images/pathogen_logo.png';
 import Button from '../../components/Button';
@@ -26,6 +27,36 @@ const Pathogens = () => {
   const { pathogens } = usePathogens();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  // Form fields
+  const [code, setCode] = useState('');
+  const [name, setName] = useState('');
+  const [bounty, setBounty] = useState(10);
+  const [rewardPerProfile, setRewardPerProfile] = useState(1);
+
+  const clearState = useCallback(() => {
+    setCode('');
+    setName('');
+    setBounty(10);
+    setRewardPerProfile(1);
+  }, []);
+
+  const validate = useCallback(() => {
+    return { valid: true, message: '' };
+  }, []);
+
+  const submit = useCallback(() => {
+    const { valid, message } = validate();
+    if (valid) {
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [validate]);
+
   return (
     <>
       <div className={styles['page-container']}>
@@ -48,24 +79,38 @@ const Pathogens = () => {
       <Modal
         title='Add Pathogen'
         visible={isModalVisible}
-        onOk={() => setIsModalVisible(false)}
-        onCancel={() => setIsModalVisible(false)}
+        onOk={() => submit()}
+        onCancel={() => {
+          setIsModalVisible(false);
+          clearState();
+        }}
       >
         <div className={styles['form-container']}>
           <h4>pathogen code</h4>
-          <Input placeholder='covid-19' />
+          <Input
+            placeholder='covid-19'
+            value={code}
+            onChange={e => setCode(e.target.value)}
+          />
           <Spacer />
           <h4>pathogen name</h4>
-          <Input placeholder='Coronavirus disease 2019' />
+          <Input
+            placeholder='Coronavirus disease 2019'
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
           <Spacer />
           <div>
             <h4>Bounty (SOL)</h4>
-            <InputNumber placeholder='5' />
+            <InputNumber value={bounty} onChange={num => setBounty(num)} />
           </div>
           <Spacer />
           <div>
             <h4>Reward Per Profile (SOL)</h4>
-            <InputNumber placeholder='.25' />
+            <InputNumber
+              value={rewardPerProfile}
+              onChange={num => setRewardPerProfile(num)}
+            />
           </div>
         </div>
       </Modal>
