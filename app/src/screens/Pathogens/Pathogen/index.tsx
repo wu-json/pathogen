@@ -16,7 +16,11 @@ const Pathogen = ({ pathogen }: Props) => {
         <h3>{pathogen.publicKey.toBase58().slice(0, 32) + '...'}</h3>
       </div>
       <div className={styles['right-col']}>
-        <h2>view profiles</h2>
+        <div className={styles['button-wrapper']}>
+          <button className={`${styles['profiles-button']} ${styles['raise']}`}>
+            view profiles
+          </button>
+        </div>
         <div className={styles['reward-container']}>
           <h2>
             {pathogen.account.rewardPerProfile.toNumber() / LAMPORTS_PER_SOL}
