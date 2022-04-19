@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
+import Wallet from './Wallet';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import './styles/themes.scss';
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Wallet>
+      <App />
+    </Wallet>
   </React.StrictMode>,
 );
 
