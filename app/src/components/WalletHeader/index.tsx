@@ -1,9 +1,18 @@
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { FC } from 'react';
 
 import styles from './styles.module.scss';
 
-const WalletHeader = () => (
-  <div className={styles['container']}>
+type Props = {
+  TopLeftButton?: FC;
+};
+
+const WalletHeader = ({ TopLeftButton }: Props) => (
+  <div
+    className={styles['container']}
+    style={{ justifyContent: TopLeftButton ? 'space-between' : 'flex-end' }}
+  >
+    {TopLeftButton && <TopLeftButton />}
     <WalletMultiButton />
   </div>
 );
