@@ -2,10 +2,14 @@
   --primary-color: #ed45ff;
   --text-color: #171717;
   --bg-color: #ffffff;
+  --gradient-left: #be4bf4;
+  --gradient-right: #ffa3f0;
 }
 
 :root[data-theme='theme-dark'] {
   --primary-color: #ed45ff;
   --text-color: #f4f4f4;
   --bg-color: #1d1c1c;
+  --gradient-left: #be4bf4;
+  --gradient-right: #ffa3f0;
 }
