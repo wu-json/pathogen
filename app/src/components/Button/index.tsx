@@ -6,15 +6,13 @@ type Props = {
   onClick: () => void;
 };
 
-const Button = ({ className, label, onClick }: Props) => {
-  return (
-    <button
-      className={styles['button'] + (className ? ` ${className}` : '')}
-      onClick={onClick}
-    >
-      {label}
-    </button>
-  );
-};
+const Button = ({ className, label, onClick }: Props) => (
+  <button
+    className={styles['button'] + (className ? ` ${className}` : '')}
+    onClick={onClick}
+  >
+    {label}
+  </button>
+);
 
 export default Button;

@@ -1,0 +1,17 @@
+.container {
+  width: calc(100% - 120px);
+  display: flex;
+  justify-content: flex-end;
+  padding: 30px 60px;
+}
+
+.container a {
+  font-family: Roboto-Light;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.container a:hover {
+  color: var(--primary-color);
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@ import AnchorLogo from '../../assets/images/anchor_logo.png';
 import PathogenLogo from '../../assets/images/pathogen_logo.png';
 import SolanaLogo from '../../assets/images/solana_logo.png';
 import Button from '../../components/Button';
+import Footer from '../../components/Footer';
 import styles from './styles.module.scss';
 
 const Home = () => {
@@ -42,6 +43,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
