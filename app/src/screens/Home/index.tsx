@@ -36,7 +36,8 @@ const Home = () => {
             </h2>
             <h2>
               I built this for my senior thesis at Yale University, and the
-              source code can be found here.
+              source code can be found{' '}
+              <a href='https://github.com/wu-json/pathogen'>here.</a>
             </h2>
           </div>
         </div>

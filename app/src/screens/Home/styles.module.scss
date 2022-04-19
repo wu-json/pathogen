@@ -25,6 +25,15 @@
   color: var(--text-color);
 }
 
+.page-container a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.page-container a:hover {
+  filter: brightness(80%);
+}
+
 .page-container img {
   height: 80px;
   width: 80px;
