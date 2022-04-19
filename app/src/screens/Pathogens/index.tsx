@@ -41,8 +41,36 @@ const Pathogens = () => {
   }, []);
 
   const validate = useCallback(() => {
+    if (!code.length) {
+      return { valid: false, message: 'Pathogen code is required.' };
+    }
+    if (!name.length) {
+      return { valid: false, message: 'Pathogen name is required.' };
+    }
+    if (bounty <= 0) {
+      return { valid: false, message: 'Bounty must be a positive number.' };
+    }
+    if (rewardPerProfile <= 0) {
+      return {
+        valid: false,
+        message: 'Reward per profile must be a positive number.',
+      };
+    }
+    if (bounty < rewardPerProfile) {
+      return { valid: false, message: 'Bounty must be greater than reward.' };
+    }
+    if (bounty % 1 !== 0) {
+      return { valid: false, message: 'Bounty must be an integer.' };
+    }
+    if (rewardPerProfile % 1 !== 0) {
+      return {
+        valid: false,
+        message: 'Reward per profile must be an integer.',
+      };
+    }
+
     return { valid: true, message: '' };
-  }, []);
+  }, [bounty, code, name, rewardPerProfile]);
 
   const submit = useCallback(() => {
     const { valid, message } = validate();
@@ -50,9 +78,9 @@ const Pathogens = () => {
     } else {
       Swal.fire({
         icon: 'error',
-        title: message,
+        text: message,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 3000,
       });
     }
   }, [validate]);
