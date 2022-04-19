@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import AnchorLogo from '../../assets/images/anchor_logo.png';
 import PathogenLogo from '../../assets/images/pathogen_logo.png';
 import SolanaLogo from '../../assets/images/solana_logo.png';
@@ -6,6 +8,7 @@ import Footer from '../../components/Footer';
 import styles from './styles.module.scss';
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles['page-container']}>
       <div className={styles['header-wrapper']}>
@@ -17,7 +20,7 @@ const Home = () => {
             <Button
               className={styles['button']}
               label={'view demo'}
-              onClick={() => {}}
+              onClick={() => navigate('/pathogens')}
             />
           </div>
         </div>

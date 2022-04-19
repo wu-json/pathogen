@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import useStickyState from './hooks/useStickyState';
 import Home from './screens/Home';
+import Pathogens from './screens/Pathogens';
 import setTheme from './styles/setTheme';
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/pathogens' element={<Pathogens />} />
       </Routes>
     </BrowserRouter>
   );
