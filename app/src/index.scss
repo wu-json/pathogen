@@ -41,6 +41,19 @@
   filter: brightness(80%);
 }
 
+/* Input */
+.ant-input,
+.ant-input-number {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+.ant-input:focus,
+.ant-input:hover,
+.ant-input-number:focus,
+.ant-input-number:hover {
+  border-color: var(--gradient-left);
+}
+
 html,
 body {
   background: var(--bg-color);

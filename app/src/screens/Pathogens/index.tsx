@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Input, InputNumber, Modal } from 'antd';
 import { useCallback, useState } from 'react';
 
 import PathogenLogo from '../../assets/images/pathogen_logo.png';
@@ -8,6 +8,8 @@ import WalletHeader from '../../components/WalletHeader';
 import usePathogens from '../../hooks/api/usePathogens';
 import Pathogen from './Pathogen';
 import styles from './styles.module.scss';
+
+const Spacer = () => <div style={{ height: 15 }} />;
 
 type AddPathogenButtonProps = {
   openModal: () => void;
@@ -49,7 +51,23 @@ const Pathogens = () => {
         onOk={() => setIsModalVisible(false)}
         onCancel={() => setIsModalVisible(false)}
       >
-        <p>hello</p>
+        <div className={styles['form-container']}>
+          <h4>pathogen code</h4>
+          <Input placeholder='covid-19' />
+          <Spacer />
+          <h4>pathogen name</h4>
+          <Input placeholder='Coronavirus disease 2019' />
+          <Spacer />
+          <div>
+            <h4>Bounty (SOL)</h4>
+            <InputNumber placeholder='5' />
+          </div>
+          <Spacer />
+          <div>
+            <h4>Reward Per Profile (SOL)</h4>
+            <InputNumber placeholder='.25' />
+          </div>
+        </div>
       </Modal>
     </>
   );
