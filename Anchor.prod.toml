@@ -1,0 +1,12 @@
+[features]
+seeds = false
+
+[programs.devnet]
+pathogen = "CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "devnet"
+wallet = "./secrets/solana/id.json"
