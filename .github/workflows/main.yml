@@ -86,6 +86,12 @@ jobs:
       - run: echo "/home/runner/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
         shell: bash
 
+      - uses: actions/download-artifact@v2
+        with:
+          name: anchor-binary
+          path: ~/.cargo/bin/
+      - run: chmod +x ~/.cargo/bin/anchor
+
       - name: Replace Anchor.toml with Anchor.prod.toml
         run: rm Anchor.toml && mv Anchor.prod.toml Anchor.toml
 
