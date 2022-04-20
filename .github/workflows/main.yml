@@ -100,6 +100,9 @@ jobs:
         env:
           ID_JSON_SECRET_PASSPHRASE: ${{ secrets.ID_JSON_SECRET_PASSPHRASE }}
 
+      - name: Switch Solana config to DevNet
+        run: solana config set --url devnet
+
       - name: Build for DevNet
         run: anchor build
 
