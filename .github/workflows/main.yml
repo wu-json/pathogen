@@ -114,7 +114,8 @@ jobs:
       - name: Print PreDeploy SOL balance
         run: solana balance
 
-      # - run: anchor deploy
+      - name: Deploy app to DevNet
+        run: anchor deploy
 
       - name: Print PostDeploy SOL balance
         run: solana balance
