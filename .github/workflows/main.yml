@@ -90,4 +90,7 @@ jobs:
       - run: rm Anchor.toml
       - run: mv Anchor.prod.toml Anchor.toml
 
+      # change deploy target
+      
+
       - run: echo "i would have deployed here if I knew how!"
