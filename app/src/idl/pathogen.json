@@ -1,0 +1,199 @@
+{
+  "version": "0.1.0",
+  "name": "pathogen",
+  "instructions": [
+    {
+      "name": "createPathogen",
+      "accounts": [
+        {
+          "name": "pathogen",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "code",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "bounty",
+          "type": "u64"
+        },
+        {
+          "name": "rewardPerProfile",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "createProfile",
+      "accounts": [
+        {
+          "name": "profile",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "pathogen",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "latestTestResult",
+          "type": "string"
+        },
+        {
+          "name": "latestTestResultDate",
+          "type": "i64"
+        },
+        {
+          "name": "age",
+          "type": "u8"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Pathogen",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "rewardPerProfile",
+            "type": "u64"
+          },
+          {
+            "name": "totalProfiles",
+            "type": "u64"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Profile",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "pathogen",
+            "type": "publicKey"
+          },
+          {
+            "name": "latestTestResult",
+            "type": "string"
+          },
+          {
+            "name": "latestTestResultDate",
+            "type": "i64"
+          },
+          {
+            "name": "age",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "CreateProfileErrorCode",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "TestResultTooLong"
+          },
+          {
+            "name": "TestResultEmpty"
+          },
+          {
+            "name": "TooPoor"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NameTooLong",
+      "msg": "The provided name should be 50 characters long maximum."
+    },
+    {
+      "code": 6001,
+      "name": "CodeTooLong",
+      "msg": "The provided code should be 25 characters long maximum."
+    },
+    {
+      "code": 6002,
+      "name": "NameEmpty",
+      "msg": "The provided name is empty."
+    },
+    {
+      "code": 6003,
+      "name": "CodeEmpty",
+      "msg": "The provided code is empty."
+    },
+    {
+      "code": 6004,
+      "name": "RewardGreaterThanBounty",
+      "msg": "The reward per profile must be less than the bounty."
+    },
+    {
+      "code": 6005,
+      "name": "TooPoor",
+      "msg": "Not enough lamports to cover bounty."
+    }
+  ],
+  "metadata": {
+    "address": "CYmfp3tVDFtfkK5TeTYbNKRT4kQa5it57jjgERaTpZwh"
+  }
+}

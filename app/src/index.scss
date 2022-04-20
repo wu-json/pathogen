@@ -1,3 +1,60 @@
+@import '~antd/dist/antd.css';
+
+/* Modal */
+.ant-modal-header {
+  background: var(--bg-color);
+  border-color: var(--bg-color);
+}
+.ant-modal-title {
+  color: var(--text-color);
+}
+.ant-modal-close-x {
+  color: var(--text-color);
+}
+.ant-modal-close-x:hover {
+  filter: brightness(80%);
+}
+.ant-modal-content {
+  background: var(--bg-color);
+}
+.ant-modal-footer {
+  border-color: var(--bg-color);
+}
+
+/* Button */
+.ant-btn-primary {
+  color: #fff;
+  border-color: var(--gradient-left);
+  background: var(--gradient-left);
+}
+.ant-btn:hover,
+.ant-btn:active,
+.ant-btn:focus {
+  border-color: var(--gradient-left);
+  background: var(--gradient-left);
+  color: var(--text-color);
+}
+.ant-btn-primary:hover,
+.ant-btn-primary:active,
+.ant-btn-primary:focus {
+  border-color: var(--gradient-left);
+  background: var(--gradient-left);
+  filter: brightness(80%);
+}
+
+/* Input */
+.ant-input,
+.ant-input-number {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+.ant-input:focus,
+.ant-input:hover,
+.ant-input-number:focus,
+.ant-input-number:hover {
+  border-color: var(--gradient-left);
+}
+
 html,
 body {
   background: var(--bg-color);
