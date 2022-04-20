@@ -112,7 +112,7 @@ const Pathogens = () => {
               pathogens.map(pathogen => <Pathogen pathogen={pathogen} />)
             ) : (
               <div className={styles['empty-container']}>
-                <img src={UndrawVoid} />
+                <img src={UndrawVoid} alt='void' />
                 <h3>no pathogens created yet</h3>
               </div>
             )}
