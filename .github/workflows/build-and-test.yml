@@ -1,0 +1,47 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  setup-anchor-cli:
+    name: Setup Anchor CLI
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup-anchor-cli/
+
+  build-and-test:
+    name: Build and Test
+    needs: setup-anchor-cli
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup/
+      - uses: actions/cache@v2
+        name: Cache Solana Tool Suite
+        id: cache-solana
+        with:
+          path: |
+            ~/.cache/solana/
+            ~/.local/share/solana/
+          key: solana-${{ runner.os }}-v0000-1.8.14
+      - run: sh -c "$(curl -sSfL https://release.solana.com/v1.8.14/install)"
+        shell: bash
+      - run: echo "/home/runner/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+        shell: bash
+      - run: solana-keygen new --no-bip39-passphrase
+        shell: bash
+      - run: solana config set --url localhost
+        shell: bash
+      - uses: actions/download-artifact@v2
+        with:
+          name: anchor-binary
+          path: ~/.cargo/bin/
+      - run: chmod +x ~/.cargo/bin/anchor
+      - run: yarn
+      - run: anchor test
