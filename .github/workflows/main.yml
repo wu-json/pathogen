@@ -93,6 +93,16 @@ jobs:
       # decrypt secrets for deployments
       - run: bash scripts/decrypt-secrets.sh
 
-      # rebuild the app and deploy
+      # rebuild the app
       - run: anchor build
+
+      - name: Print PreDeploy SOL balance
+        run: solana balance
+
       # - run: anchor deploy
+
+      - name: Print PostDeploy SOL balance
+      - run: solana balance
+
+      - name: Finish Deploy!
+      - run: echo "Program deployed to devnet at address:" && solana address -k target/deploy/pathogen-keypair.json
