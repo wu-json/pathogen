@@ -95,4 +95,4 @@ jobs:
 
       # rebuild the app and deploy
       - run: anchor build
-      - run: anchor deploy
+      # - run: anchor deploy
