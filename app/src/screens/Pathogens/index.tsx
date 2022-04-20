@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 import WalletHeader from '../../components/WalletHeader';
 import usePathogens from '../../hooks/api/usePathogens';
+import useWorkspace from '../../hooks/useWorkspace';
 import Pathogen from './Pathogen';
 import styles from './styles.module.scss';
 
@@ -30,6 +31,7 @@ const AddPathogenButton = ({ openModal }: AddPathogenButtonProps) => {
 };
 
 const Pathogens = () => {
+  const { wallet } = useWorkspace();
   const { pathogens } = usePathogens();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -95,7 +97,9 @@ const Pathogens = () => {
     <>
       <div className={styles['page-container']}>
         <WalletHeader>
-          <AddPathogenButton openModal={() => setIsModalVisible(true)} />
+          {wallet && (
+            <AddPathogenButton openModal={() => setIsModalVisible(true)} />
+          )}
         </WalletHeader>
         <div className={styles['container']}>
           <div className={styles['header-container']}>
