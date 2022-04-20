@@ -90,7 +90,9 @@ jobs:
       - run: rm Anchor.toml
       - run: mv Anchor.prod.toml Anchor.toml
 
-      # change deploy target
-      
+      # decrypt secrets for deployments
+      - run: bash scripts/decrypt-secrets.sh
 
-      - run: echo "i would have deployed here if I knew how!"
+      # rebuild the app and deploy
+      - run: anchor build
+      - run: anchor deploy
