@@ -20,7 +20,13 @@ const AddPathogenButton = ({ openModal }: AddPathogenButtonProps) => {
   const onClick = useCallback(() => {
     openModal();
   }, [openModal]);
-  return <Button label='add pathogen' onClick={onClick} />;
+  return (
+    <Button
+      label='add pathogen'
+      onClick={onClick}
+      style={{ marginRight: 20 }}
+    />
+  );
 };
 
 const Pathogens = () => {

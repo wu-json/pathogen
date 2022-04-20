@@ -4,10 +4,7 @@ import { PropsWithChildren } from 'react';
 import styles from './styles.module.scss';
 
 const WalletHeader = (props: PropsWithChildren<{}>) => (
-  <div
-    className={styles['container']}
-    style={{ justifyContent: props.children ? 'space-between' : 'flex-end' }}
-  >
+  <div className={styles['container']}>
     {props.children}
     <WalletMultiButton />
   </div>
