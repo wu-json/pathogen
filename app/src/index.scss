@@ -1,5 +1,7 @@
 @import '~antd/dist/antd.css';
 
+/* Antd Overrides */
+
 /* Modal */
 .ant-modal-header {
   background: var(--bg-color);
@@ -53,6 +55,25 @@
 .ant-input-number:focus,
 .ant-input-number:hover {
   border-color: var(--gradient-left);
+}
+
+/* Solana Wallet Adapter Overrides */
+.wallet-adapter-button {
+  background-color: var(--primary-color);
+  color: var(--bg-color);
+  border-radius: 30px;
+  padding: 6px 24px;
+  text-transform: lowercase;
+  font-family: Roboto-Medium;
+  font-size: 18px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.wallet-adapter-button:hover {
+  background-color: var(--bg-color);
+  color: var(--primary-color);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 html,

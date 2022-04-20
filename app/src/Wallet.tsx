@@ -19,7 +19,7 @@ const Wallet = (props: PropsWithChildren<{}>) => {
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
+      <WalletProvider wallets={wallets}>
         <WalletModalProvider>{props.children}</WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>

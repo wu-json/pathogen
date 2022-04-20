@@ -3,10 +3,12 @@ import { useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
 
 import PathogenLogo from '../../assets/images/pathogen_logo.png';
+import UndrawVoid from '../../assets/images/undraw_void.svg';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 import WalletHeader from '../../components/WalletHeader';
 import usePathogens from '../../hooks/api/usePathogens';
+import useWorkspace from '../../hooks/useWorkspace';
 import Pathogen from './Pathogen';
 import styles from './styles.module.scss';
 
@@ -20,10 +22,17 @@ const AddPathogenButton = ({ openModal }: AddPathogenButtonProps) => {
   const onClick = useCallback(() => {
     openModal();
   }, [openModal]);
-  return <Button label='add pathogen' onClick={onClick} />;
+  return (
+    <Button
+      label='add pathogen'
+      onClick={onClick}
+      style={{ marginRight: 20 }}
+    />
+  );
 };
 
 const Pathogens = () => {
+  const { wallet } = useWorkspace();
   const { pathogens } = usePathogens();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -89,7 +98,9 @@ const Pathogens = () => {
     <>
       <div className={styles['page-container']}>
         <WalletHeader>
-          <AddPathogenButton openModal={() => setIsModalVisible(true)} />
+          {wallet && (
+            <AddPathogenButton openModal={() => setIsModalVisible(true)} />
+          )}
         </WalletHeader>
         <div className={styles['container']}>
           <div className={styles['header-container']}>
@@ -97,9 +108,14 @@ const Pathogens = () => {
             <h1>pathogen</h1>
           </div>
           <div className={styles['pathogens-container']}>
-            {pathogens.map(pathogen => (
-              <Pathogen pathogen={pathogen} />
-            ))}
+            {pathogens.length ? (
+              pathogens.map(pathogen => <Pathogen pathogen={pathogen} />)
+            ) : (
+              <div className={styles['empty-container']}>
+                <img src={UndrawVoid} />
+                <h3>no pathogens created yet</h3>
+              </div>
+            )}
           </div>
         </div>
         <Footer />
