@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
 
 import PathogenLogo from '../../assets/images/pathogen_logo.png';
+import UndrawVoid from '../../assets/images/undraw_void.svg';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 import WalletHeader from '../../components/WalletHeader';
@@ -107,9 +108,14 @@ const Pathogens = () => {
             <h1>pathogen</h1>
           </div>
           <div className={styles['pathogens-container']}>
-            {pathogens.map(pathogen => (
-              <Pathogen pathogen={pathogen} />
-            ))}
+            {pathogens.length ? (
+              pathogens.map(pathogen => <Pathogen pathogen={pathogen} />)
+            ) : (
+              <div className={styles['empty-container']}>
+                <img src={UndrawVoid} />
+                <h3>no pathogens created yet</h3>
+              </div>
+            )}
           </div>
         </div>
         <Footer />
