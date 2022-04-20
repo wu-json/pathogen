@@ -91,12 +91,16 @@ jobs:
 
       - name: Decrypt provider wallet id
         run: bash scripts/decrypt-id.sh
+        env:
+          ID_JSON_SECRET_PASSPHRASE: ${{ secrets.ID_JSON_SECRET_PASSPHRASE }}
 
       - name: Build for DevNet
         run: anchor build
 
       - name: Decrypt Pathogen keypair
         run: bash scripts/decrypt-pathogen-keypair.sh
+        env:
+          PATHOGEN_KEYPAIR_JSON_PASSPHRASE: ${{ secrets.PATHOGEN_KEYPAIR_JSON_PASSPHRASE }}
 
       - name: Print PreDeploy SOL balance
         run: solana balance
