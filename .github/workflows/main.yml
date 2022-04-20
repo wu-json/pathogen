@@ -89,11 +89,14 @@ jobs:
       - name: Replace Anchor.toml with Anchor.prod.toml
         run: rm Anchor.toml && mv Anchor.prod.toml Anchor.toml
 
+      - name: Decrypt provider wallet id
+        run: bash scripts/decrypt-id.sh
+
       - name: Build for DevNet
         run: anchor build
 
-      - name: Decrypt secrets for deployments
-        run: bash scripts/decrypt-secrets.sh
+      - name: Decrypt Pathogen keypair
+        run: bash scripts/decrypt-pathogen-keypair.sh
 
       - name: Print PreDeploy SOL balance
         run: solana balance
