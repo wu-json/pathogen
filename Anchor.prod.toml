@@ -9,4 +9,4 @@ url = "https://anchor.projectserum.com"
 
 [provider]
 cluster = "devnet"
-wallet = "./secrets/solana/id.json"
+wallet = "~/.config/solana/id.json"
