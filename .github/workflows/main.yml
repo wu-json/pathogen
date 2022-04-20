@@ -11,25 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/actions/setup/
-      - uses: actions/cache@v2
-        name: Cache Cargo registry + index
-        id: cache-anchor
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ./target/
-          key: cargo-${{ runner.os }}-anchor-${{ hashFiles('**/Cargo.lock') }}
-      - run: cargo install anchor-cli --locked --force
-      - run: chmod +x ~/.cargo/bin/anchor
-      - uses: actions/upload-artifact@v2
-        with:
-          name: anchor-binary
-          path: ~/.cargo/bin/anchor
+      - uses: ./.github/actions/setup-anchor-cli/
 
   build-and-test:
     name: Build and Test
