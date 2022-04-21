@@ -39,6 +39,7 @@ const Pathogens = () => {
   const { createPathogen } = useCreatePathogen();
   const { pathogens, setPathogens } = usePathogens();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Form fields
   const [code, setCode] = useState('');
@@ -89,6 +90,7 @@ const Pathogens = () => {
     const { valid, message } = validate();
     if (valid) {
       try {
+        setIsLoading(true);
         const pathogen = await createPathogen(
           code,
           name,
@@ -104,7 +106,9 @@ const Pathogens = () => {
           timer: 3000,
         });
       } finally {
+        setIsLoading(false);
         setIsModalVisible(false);
+        clearState();
       }
     } else {
       Swal.fire({
@@ -165,35 +169,42 @@ const Pathogens = () => {
           setIsModalVisible(false);
           clearState();
         }}
+        confirmLoading={isLoading}
       >
-        <div className={styles['form-container']}>
-          <h4>pathogen code</h4>
-          <Input
-            placeholder='covid-19'
-            value={code}
-            onChange={e => setCode(e.target.value)}
-          />
-          <Spacer />
-          <h4>pathogen name</h4>
-          <Input
-            placeholder='Coronavirus disease 2019'
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
-          <Spacer />
-          <div>
-            <h4>Bounty (SOL)</h4>
-            <InputNumber value={bounty} onChange={num => setBounty(num)} />
+        {isLoading ? (
+          <div className={styles['loader-container']}>
+            <h4>submitting transaction to solana blockchain</h4>
           </div>
-          <Spacer />
-          <div>
-            <h4>Reward Per Profile (SOL)</h4>
-            <InputNumber
-              value={rewardPerProfile}
-              onChange={num => setRewardPerProfile(num)}
+        ) : (
+          <div className={styles['form-container']}>
+            <h4>pathogen code</h4>
+            <Input
+              placeholder='covid-19'
+              value={code}
+              onChange={e => setCode(e.target.value)}
             />
+            <Spacer />
+            <h4>pathogen name</h4>
+            <Input
+              placeholder='Coronavirus disease 2019'
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
+            <Spacer />
+            <div>
+              <h4>Bounty (SOL)</h4>
+              <InputNumber value={bounty} onChange={num => setBounty(num)} />
+            </div>
+            <Spacer />
+            <div>
+              <h4>Reward Per Profile (SOL)</h4>
+              <InputNumber
+                value={rewardPerProfile}
+                onChange={num => setRewardPerProfile(num)}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </Modal>
     </>
   );
