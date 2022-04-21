@@ -120,6 +120,7 @@ const Pathogens = () => {
     }
   }, [
     bounty,
+    clearState,
     code,
     name,
     rewardPerProfile,
