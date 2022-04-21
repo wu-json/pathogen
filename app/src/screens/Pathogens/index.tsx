@@ -1,12 +1,15 @@
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { Input, InputNumber, Modal } from 'antd';
 import { useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
 
 import PathogenLogo from '../../assets/images/pathogen_logo.png';
+import UndrawRocket from '../../assets/images/undraw_rocket.svg';
 import UndrawVoid from '../../assets/images/undraw_void.svg';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 import WalletHeader from '../../components/WalletHeader';
+import useCreatePathogen from '../../hooks/api/useCreatePathogen';
 import usePathogens from '../../hooks/api/usePathogens';
 import useWorkspace from '../../hooks/useWorkspace';
 import Pathogen from './Pathogen';
@@ -33,8 +36,10 @@ const AddPathogenButton = ({ openModal }: AddPathogenButtonProps) => {
 
 const Pathogens = () => {
   const { wallet } = useWorkspace();
-  const { pathogens } = usePathogens();
+  const { createPathogen } = useCreatePathogen();
+  const { pathogens, setPathogens } = usePathogens();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Form fields
   const [code, setCode] = useState('');
@@ -68,22 +73,43 @@ const Pathogens = () => {
     if (bounty < rewardPerProfile) {
       return { valid: false, message: 'Bounty must be greater than reward.' };
     }
-    if (bounty % 1 !== 0) {
-      return { valid: false, message: 'Bounty must be an integer.' };
+    if ((bounty * LAMPORTS_PER_SOL) % 1 !== 0) {
+      return { valid: false, message: 'Bounty must be at least 1 lamport.' };
     }
-    if (rewardPerProfile % 1 !== 0) {
+    if ((rewardPerProfile * LAMPORTS_PER_SOL) % 1 !== 0) {
       return {
         valid: false,
-        message: 'Reward per profile must be an integer.',
+        message: 'Reward per profile must be at least 1 lamport.',
       };
     }
 
     return { valid: true, message: '' };
   }, [bounty, code, name, rewardPerProfile]);
 
-  const submit = useCallback(() => {
+  const submit = useCallback(async () => {
     const { valid, message } = validate();
     if (valid) {
+      try {
+        setIsLoading(true);
+        const pathogen = await createPathogen(
+          code,
+          name,
+          bounty,
+          rewardPerProfile,
+        );
+        setPathogens([pathogen, ...pathogens]);
+      } catch (e) {
+        Swal.fire({
+          icon: 'error',
+          text: `Something went wrong creating this pathogen: ${e}`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      } finally {
+        setIsLoading(false);
+        setIsModalVisible(false);
+        clearState();
+      }
     } else {
       Swal.fire({
         icon: 'error',
@@ -92,7 +118,16 @@ const Pathogens = () => {
         timer: 3000,
       });
     }
-  }, [validate]);
+  }, [
+    bounty,
+    code,
+    name,
+    rewardPerProfile,
+    createPathogen,
+    pathogens,
+    setPathogens,
+    validate,
+  ]);
 
   return (
     <>
@@ -109,11 +144,17 @@ const Pathogens = () => {
           </div>
           <div className={styles['pathogens-container']}>
             {pathogens.length ? (
-              pathogens.map(pathogen => <Pathogen pathogen={pathogen} />)
+              pathogens.map((pathogen, i) => (
+                <Pathogen pathogen={pathogen} key={i} />
+              ))
             ) : (
               <div className={styles['empty-container']}>
-                <img src={UndrawVoid} alt='void' />
-                <h3>no pathogens created yet</h3>
+                <img src={wallet ? UndrawVoid : UndrawRocket} alt='void' />
+                <h3>
+                  {wallet
+                    ? 'no pathogens created yet'
+                    : 'select wallet to view pathogens'}
+                </h3>
               </div>
             )}
           </div>
@@ -128,35 +169,42 @@ const Pathogens = () => {
           setIsModalVisible(false);
           clearState();
         }}
+        confirmLoading={isLoading}
       >
-        <div className={styles['form-container']}>
-          <h4>pathogen code</h4>
-          <Input
-            placeholder='covid-19'
-            value={code}
-            onChange={e => setCode(e.target.value)}
-          />
-          <Spacer />
-          <h4>pathogen name</h4>
-          <Input
-            placeholder='Coronavirus disease 2019'
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
-          <Spacer />
-          <div>
-            <h4>Bounty (SOL)</h4>
-            <InputNumber value={bounty} onChange={num => setBounty(num)} />
+        {isLoading ? (
+          <div className={styles['loader-container']}>
+            <h4>submitting transaction to solana blockchain</h4>
           </div>
-          <Spacer />
-          <div>
-            <h4>Reward Per Profile (SOL)</h4>
-            <InputNumber
-              value={rewardPerProfile}
-              onChange={num => setRewardPerProfile(num)}
+        ) : (
+          <div className={styles['form-container']}>
+            <h4>pathogen code</h4>
+            <Input
+              placeholder='covid-19'
+              value={code}
+              onChange={e => setCode(e.target.value)}
             />
+            <Spacer />
+            <h4>pathogen name</h4>
+            <Input
+              placeholder='Coronavirus disease 2019'
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
+            <Spacer />
+            <div>
+              <h4>Bounty (SOL)</h4>
+              <InputNumber value={bounty} onChange={num => setBounty(num)} />
+            </div>
+            <Spacer />
+            <div>
+              <h4>Reward Per Profile (SOL)</h4>
+              <InputNumber
+                value={rewardPerProfile}
+                onChange={num => setRewardPerProfile(num)}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </Modal>
     </>
   );
