@@ -41,7 +41,7 @@ const useCreatePathogen = () => {
       );
 
       return {
-        publicKey: pathogen,
+        publicKey: pathogen.publicKey,
         account: pathogenAccount,
       };
     },
