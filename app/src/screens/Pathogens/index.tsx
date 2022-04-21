@@ -110,7 +110,16 @@ const Pathogens = () => {
         timer: 3000,
       });
     }
-  }, [validate]);
+  }, [
+    bounty,
+    code,
+    name,
+    rewardPerProfile,
+    createPathogen,
+    pathogens,
+    setPathogens,
+    validate,
+  ]);
 
   return (
     <>
