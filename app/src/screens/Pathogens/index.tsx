@@ -94,7 +94,10 @@ const Pathogens = () => {
           bounty,
           rewardPerProfile,
         );
+        console.log('PATHOGEN');
+        console.log(pathogen);
         setPathogens([pathogen, ...pathogens]);
+        setIsModalVisible(false);
       } catch (e) {
         Swal.fire({
           icon: 'error',
