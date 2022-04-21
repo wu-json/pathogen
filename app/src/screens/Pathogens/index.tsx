@@ -1,3 +1,4 @@
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { Input, InputNumber, Modal } from 'antd';
 import { useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
@@ -70,13 +71,13 @@ const Pathogens = () => {
     if (bounty < rewardPerProfile) {
       return { valid: false, message: 'Bounty must be greater than reward.' };
     }
-    if (bounty % 1 !== 0) {
-      return { valid: false, message: 'Bounty must be an integer.' };
+    if ((bounty * LAMPORTS_PER_SOL) % 1 !== 0) {
+      return { valid: false, message: 'Bounty must be at least 1 lamport.' };
     }
-    if (rewardPerProfile % 1 !== 0) {
+    if ((rewardPerProfile * LAMPORTS_PER_SOL) % 1 !== 0) {
       return {
         valid: false,
-        message: 'Reward per profile must be an integer.',
+        message: 'Reward per profile must be at least 1 lamport.',
       };
     }
 
