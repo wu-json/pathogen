@@ -94,10 +94,7 @@ const Pathogens = () => {
           bounty,
           rewardPerProfile,
         );
-        console.log('PATHOGEN');
-        console.log(pathogen);
         setPathogens([pathogen, ...pathogens]);
-        setIsModalVisible(false);
       } catch (e) {
         Swal.fire({
           icon: 'error',
@@ -105,6 +102,8 @@ const Pathogens = () => {
           showConfirmButton: false,
           timer: 3000,
         });
+      } finally {
+        setIsModalVisible(false);
       }
     } else {
       Swal.fire({
@@ -140,7 +139,9 @@ const Pathogens = () => {
           </div>
           <div className={styles['pathogens-container']}>
             {pathogens.length ? (
-              pathogens.map(pathogen => <Pathogen pathogen={pathogen} />)
+              pathogens.map((pathogen, i) => (
+                <Pathogen pathogen={pathogen} key={i} />
+              ))
             ) : (
               <div className={styles['empty-container']}>
                 <img src={UndrawVoid} alt='void' />

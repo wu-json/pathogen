@@ -21,7 +21,7 @@ const useCreatePathogen = () => {
 
       const pathogen = web3.Keypair.generate();
 
-      const signature = await program.methods
+      await program.methods
         .createPathogen(
           code,
           name,
@@ -36,13 +36,14 @@ const useCreatePathogen = () => {
         .signers([pathogen])
         .rpc();
 
-      await program.provider.connection.confirmTransaction(signature);
-
       const pathogenAccount = await program.account.pathogen.fetch(
         pathogen.publicKey,
       );
 
-      return pathogenAccount;
+      return {
+        publicKey: pathogen,
+        account: pathogenAccount,
+      };
     },
     [wallet, program],
   );

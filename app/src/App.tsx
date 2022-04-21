@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Wallet from './Wallet';
 import useStickyState from './hooks/useStickyState';
 import useWorkspace from './hooks/useWorkspace';
 import Home from './screens/Home';
@@ -17,7 +18,14 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/pathogens' element={<Pathogens />} />
+        <Route
+          path='/pathogens'
+          element={
+            <Wallet>
+              <Pathogens />
+            </Wallet>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
