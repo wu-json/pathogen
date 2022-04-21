@@ -7,6 +7,7 @@ import UndrawVoid from '../../assets/images/undraw_void.svg';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 import WalletHeader from '../../components/WalletHeader';
+import useCreatePathogen from '../../hooks/api/useCreatePathogen';
 import usePathogens from '../../hooks/api/usePathogens';
 import useWorkspace from '../../hooks/useWorkspace';
 import Pathogen from './Pathogen';
@@ -33,7 +34,8 @@ const AddPathogenButton = ({ openModal }: AddPathogenButtonProps) => {
 
 const Pathogens = () => {
   const { wallet } = useWorkspace();
-  const { pathogens } = usePathogens();
+  const { createPathogen } = useCreatePathogen();
+  const { pathogens, setPathogens } = usePathogens();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Form fields
@@ -81,9 +83,26 @@ const Pathogens = () => {
     return { valid: true, message: '' };
   }, [bounty, code, name, rewardPerProfile]);
 
-  const submit = useCallback(() => {
+  const submit = useCallback(async () => {
     const { valid, message } = validate();
     if (valid) {
+      const pathogen = await createPathogen(
+        code,
+        name,
+        bounty,
+        rewardPerProfile,
+      );
+
+      if (!pathogen) {
+        Swal.fire({
+          icon: 'error',
+          text: 'Something went wrong creating the pathogen.',
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+
+      setPathogens([pathogen, ...pathogens]);
     } else {
       Swal.fire({
         icon: 'error',
