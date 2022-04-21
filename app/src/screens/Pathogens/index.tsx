@@ -86,23 +86,22 @@ const Pathogens = () => {
   const submit = useCallback(async () => {
     const { valid, message } = validate();
     if (valid) {
-      const pathogen = await createPathogen(
-        code,
-        name,
-        bounty,
-        rewardPerProfile,
-      );
-
-      if (!pathogen) {
+      try {
+        const pathogen = await createPathogen(
+          code,
+          name,
+          bounty,
+          rewardPerProfile,
+        );
+        setPathogens([pathogen, ...pathogens]);
+      } catch (e) {
         Swal.fire({
           icon: 'error',
-          text: 'Something went wrong creating the pathogen.',
+          text: `Something went wrong creating this pathogen: ${e}`,
           showConfirmButton: false,
           timer: 3000,
         });
       }
-
-      setPathogens([pathogen, ...pathogens]);
     } else {
       Swal.fire({
         icon: 'error',
