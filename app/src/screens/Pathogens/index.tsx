@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
 
 import PathogenLogo from '../../assets/images/pathogen_logo.png';
+import UndrawRocket from '../../assets/images/undraw_rocket.svg';
 import UndrawVoid from '../../assets/images/undraw_void.svg';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
@@ -144,8 +145,12 @@ const Pathogens = () => {
               ))
             ) : (
               <div className={styles['empty-container']}>
-                <img src={UndrawVoid} alt='void' />
-                <h3>no pathogens created yet</h3>
+                <img src={wallet ? UndrawVoid : UndrawRocket} alt='void' />
+                <h3>
+                  {wallet
+                    ? 'no pathogens created yet'
+                    : 'select wallet to view pathogens'}
+                </h3>
               </div>
             )}
           </div>
