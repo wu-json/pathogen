@@ -1,13 +1,10 @@
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { DateTime } from 'luxon';
 import { useCallback, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import SolanaCircleLogo from '../../../assets/images/solana_circle_logo.svg';
 import styles from './styles.module.scss';
-
-type Props = {
-  pathogen: any;
-};
 
 const prettyPrintPathogen = (pathogen: any) => {
   const parsedPathogen = {
@@ -24,6 +21,10 @@ const prettyPrintPathogen = (pathogen: any) => {
   };
 
   return JSON.stringify(parsedPathogen, null, 2);
+};
+
+type Props = {
+  pathogen: any;
 };
 
 const Pathogen = ({ pathogen }: Props) => {
@@ -62,10 +63,23 @@ const Pathogen = ({ pathogen }: Props) => {
           </div>
         </div>
       </div>
-      <div className={styles['data-container']}>
-        <h1>pathogen data</h1>
-        <pre id='json'>{prettyPrintPathogen(pathogen)}</pre>
-      </div>
+      <CSSTransition
+        in={showDetails}
+        timeout={1000}
+        classNames={{
+          enter: styles['data-container-enter'],
+          enterActive: styles['data-container-enter-active'],
+          enterDone: styles['data-container-enter-active'],
+          exit: styles['data-container-exit'],
+          exitActive: styles['data-container-exit-active'],
+          exitDone: styles['data-container-exit-active'],
+        }}
+      >
+        <div className={styles['data-container']}>
+          <h1>pathogen data</h1>
+          <pre id='json'>{prettyPrintPathogen(pathogen)}</pre>
+        </div>
+      </CSSTransition>
     </>
   );
 };
