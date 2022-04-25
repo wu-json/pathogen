@@ -150,12 +150,16 @@ const Pathogens = () => {
               ))
             ) : (
               <div className={styles['empty-container']}>
-                <img src={wallet ? UndrawVoid : UndrawRocket} alt='void' />
-                <h3>
-                  {wallet
-                    ? 'no pathogens created yet'
-                    : 'select wallet to view pathogens'}
-                </h3>
+                {pathogensReady && (
+                  <>
+                    <img src={wallet ? UndrawVoid : UndrawRocket} alt='void' />
+                    <h3>
+                      {wallet
+                        ? 'no pathogens created yet'
+                        : 'select wallet to view pathogens'}
+                    </h3>
+                  </>
+                )}
               </div>
             )}
           </div>
