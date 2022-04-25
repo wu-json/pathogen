@@ -1,5 +1,6 @@
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { DateTime } from 'luxon';
+import { useCallback, useState } from 'react';
 
 import SolanaCircleLogo from '../../../assets/images/solana_circle_logo.svg';
 import styles from './styles.module.scss';
@@ -9,6 +10,12 @@ type Props = {
 };
 
 const Pathogen = ({ pathogen }: Props) => {
+  const [showDetails, setShowDetails] = useState<boolean>(false);
+
+  const onClickViewDetails = useCallback(() => {
+    setShowDetails(!showDetails);
+  }, [showDetails]);
+
   return (
     <div className={styles['container']}>
       <div className={styles['left-col']}>
@@ -22,8 +29,11 @@ const Pathogen = ({ pathogen }: Props) => {
       </div>
       <div className={styles['right-col']}>
         <div className={styles['button-wrapper']}>
-          <button className={`${styles['details-button']} ${styles['raise']}`}>
-            view details
+          <button
+            className={`${styles['details-button']} ${styles['raise']}`}
+            onClick={onClickViewDetails}
+          >
+            {showDetails ? 'hide details' : 'view details'}
           </button>
         </div>
         <div className={styles['reward-container']}>
