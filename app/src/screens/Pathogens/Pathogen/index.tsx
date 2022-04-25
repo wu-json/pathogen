@@ -39,7 +39,7 @@ const Pathogen = ({ pathogen }: Props) => {
       <div className={styles['pathogen-container']}>
         <div className={styles['left-col']}>
           <h1>{pathogen.account.code}</h1>
-          <h3>{pathogen.publicKey.toBase58().slice(0, 32) + '...'}</h3>
+          <h3>{pathogen.publicKey.toBase58().slice(0, 24) + '...'}</h3>
           <h3>
             {DateTime.fromMillis(
               pathogen.account.createdAt.toNumber() * 1000,
@@ -49,7 +49,14 @@ const Pathogen = ({ pathogen }: Props) => {
         <div className={styles['right-col']}>
           <div className={styles['button-wrapper']}>
             <button
-              className={`${styles['details-button']} ${styles['raise']}`}
+              className={`${styles['pathogen-button']} ${styles['raise']}`}
+              onClick={onClickViewDetails}
+              style={{ marginRight: 10 }}
+            >
+              add profile
+            </button>
+            <button
+              className={`${styles['pathogen-button']} ${styles['raise']}`}
               onClick={onClickViewDetails}
             >
               {showDetails ? 'hide details' : 'view details'}
