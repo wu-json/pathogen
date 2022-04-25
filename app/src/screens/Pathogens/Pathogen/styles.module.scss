@@ -1,4 +1,4 @@
-.container {
+.pathogen-container {
   width: 100%;
   display: flex;
   align-items: flex-start;
@@ -14,21 +14,21 @@
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.container h1 {
+.pathogen-container h1 {
   font-family: Roboto-Medium;
   font-size: 32px;
   margin: 0px 0px 10px 0px;
   color: var(--bg-color);
 }
 
-.container h2 {
+.pathogen-container h2 {
   font-family: Roboto-Medium;
   font-size: 20px;
   margin: 0px 0px 10px 0px;
   color: var(--bg-color);
 }
 
-.container h3 {
+.pathogen-container h3 {
   font-family: Roboto-Medium;
   font-size: 16px;
   margin: 0px 0px 5px 0px;
@@ -87,4 +87,23 @@
   box-shadow: 0 0.5em 0.5em -0.4em var(--bg-color);
   transform: translateY(-0.25em);
   transition: all 0.25s ease-out;
+}
+
+.data-container {
+  width: 100%;
+  display: flex;
+  background: var(--code-bg);
+  border-radius: 20px;
+  padding: 20px 30px;
+  flex-direction: column;
+}
+
+.data-container h1 {
+  font-size: 16px;
+  color: var(--primary-color);
+}
+
+.data-container pre {
+  font-size: 14px;
+  color: var(--text-color);
 }
