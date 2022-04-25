@@ -22,8 +22,8 @@ const Pathogen = ({ pathogen }: Props) => {
       </div>
       <div className={styles['right-col']}>
         <div className={styles['button-wrapper']}>
-          <button className={`${styles['profiles-button']} ${styles['raise']}`}>
-            view profiles
+          <button className={`${styles['details-button']} ${styles['raise']}`}>
+            view details
           </button>
         </div>
         <div className={styles['reward-container']}>
