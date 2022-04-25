@@ -37,7 +37,7 @@ const AddPathogenButton = ({ openModal }: AddPathogenButtonProps) => {
 const Pathogens = () => {
   const { wallet } = useWorkspace();
   const { createPathogen } = useCreatePathogen();
-  const { pathogens, setPathogens } = usePathogens();
+  const { pathogens, setPathogens, pathogensReady } = usePathogens();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -144,7 +144,7 @@ const Pathogens = () => {
             <h1>pathogen</h1>
           </div>
           <div className={styles['pathogens-container']}>
-            {pathogens.length ? (
+            {pathogens.length && pathogensReady ? (
               pathogens.map((pathogen, i) => (
                 <Pathogen pathogen={pathogen} key={i} />
               ))

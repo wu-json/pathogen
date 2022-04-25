@@ -1,15 +1,17 @@
 :root[data-theme='theme-light'] {
   --primary-color: #ed45ff;
-  --text-color: #171717;
+  --text-color: #121212;
   --bg-color: #ffffff;
   --gradient-left: #be4bf4;
   --gradient-right: #ffa3f0;
+  --code-bg: #1d1c1c;
 }
 
 :root[data-theme='theme-dark'] {
   --primary-color: #ed45ff;
   --text-color: #f4f4f4;
-  --bg-color: #1d1c1c;
+  --bg-color: #121212;
   --gradient-left: #be4bf4;
   --gradient-right: #ffa3f0;
+  --code-bg: #1d1c1c;
 }
