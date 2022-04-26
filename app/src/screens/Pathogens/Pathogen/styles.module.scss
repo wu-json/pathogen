@@ -127,3 +127,38 @@
 .data-container-exit-active {
   max-height: 0;
 }
+
+.form-container h4 {
+  color: var(--text-color);
+}
+
+.empty-container {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-container h3 {
+  color: var(--text-color);
+}
+
+.empty-container img {
+  width: 140px;
+  margin-bottom: 30px;
+}
+
+.loader-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.loader-container h4 {
+  color: var(--text-color);
+  margin-top: 10px;
+  max-width: 200px;
+}

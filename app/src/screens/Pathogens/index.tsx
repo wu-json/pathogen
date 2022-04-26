@@ -38,8 +38,8 @@ const Pathogens = () => {
   const { wallet } = useWorkspace();
   const { createPathogen } = useCreatePathogen();
   const { pathogens, setPathogens, pathogensReady } = usePathogens();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Form fields
   const [code, setCode] = useState('');
