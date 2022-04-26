@@ -164,7 +164,9 @@ const Pathogen = ({ pathogen }: Props) => {
         </div>
       </CSSTransition>
       <Modal
-        title={`Submit profile for ${pathogen.account.code}`}
+        title={`Submit profile for ${pathogen.account.code} (${
+          pathogen.account.rewardPerProfile / LAMPORTS_PER_SOL
+        } SOL)`}
         visible={isModalVisible}
         onOk={() => submit()}
         onCancel={() => {
