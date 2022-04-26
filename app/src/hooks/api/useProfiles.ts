@@ -26,7 +26,7 @@ const useProfiles = (pathogenPublicKey: PublicKey) => {
           setReady(true);
         });
     }
-  }, [program]);
+  }, [program, pathogenPublicKey]);
 
   return { profiles, setProfiles, profilesReady: ready };
 };

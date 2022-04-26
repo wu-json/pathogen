@@ -44,9 +44,10 @@ const prettyPrintProfiles = (profiles: any[]) => {
 
 type Props = {
   pathogen: any;
+  incrementPathogenProfileCount: (pathogen: any) => void;
 };
 
-const Pathogen = ({ pathogen }: Props) => {
+const Pathogen = ({ pathogen, incrementPathogenProfileCount }: Props) => {
   const { createProfile } = useCreateProfile();
   const { profiles, setProfiles } = useProfiles(pathogen.publicKey);
   const [showDetails, setShowDetails] = useState<boolean>(false);
@@ -100,6 +101,7 @@ const Pathogen = ({ pathogen }: Props) => {
           age,
         );
         setProfiles([profile, ...profiles]);
+        incrementPathogenProfileCount(pathogen);
       } catch (e) {
         Swal.fire({
           icon: 'error',
@@ -120,7 +122,18 @@ const Pathogen = ({ pathogen }: Props) => {
         timer: 3000,
       });
     }
-  }, [validate, clearState]);
+  }, [
+    validate,
+    clearState,
+    age,
+    createProfile,
+    dateString,
+    incrementPathogenProfileCount,
+    pathogen,
+    profiles,
+    setProfiles,
+    testResult,
+  ]);
 
   return (
     <>

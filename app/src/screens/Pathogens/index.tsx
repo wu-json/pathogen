@@ -1,5 +1,6 @@
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { Input, InputNumber, Modal } from 'antd';
+import BN from 'bn.js';
 import { useCallback, useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -40,6 +41,21 @@ const Pathogens = () => {
   const { pathogens, setPathogens, pathogensReady } = usePathogens();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const incrementPathogenProfileCount = useCallback(
+    (pathogen: any) => {
+      const updatedPathogens = pathogens.map(p => {
+        if (pathogen.publicKey === p.publicKey) {
+          p.account.totalProfiles = new BN(
+            p.account.totalProfiles.toNumber() + 1,
+          );
+        }
+        return p;
+      });
+      setPathogens(updatedPathogens);
+    },
+    [pathogens, setPathogens],
+  );
 
   // Form fields
   const [code, setCode] = useState('');
@@ -146,7 +162,11 @@ const Pathogens = () => {
           <div className={styles['pathogens-container']}>
             {pathogens.length && pathogensReady ? (
               pathogens.map((pathogen, i) => (
-                <Pathogen pathogen={pathogen} key={i} />
+                <Pathogen
+                  pathogen={pathogen}
+                  incrementPathogenProfileCount={incrementPathogenProfileCount}
+                  key={i}
+                />
               ))
             ) : (
               <div className={styles['empty-container']}>
