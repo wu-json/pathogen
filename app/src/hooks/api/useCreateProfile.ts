@@ -26,7 +26,8 @@ const useCreateProfile = () => {
       await program.methods
         .createProfile(
           latestTestResult,
-          new BN(latestTestResultDate.toMillis(), age),
+          new BN(latestTestResultDate.toMillis()),
+          age,
         )
         .accounts({
           pathogen,

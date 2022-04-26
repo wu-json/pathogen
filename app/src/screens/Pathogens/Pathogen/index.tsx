@@ -79,7 +79,16 @@ const Pathogen = ({ pathogen }: Props) => {
     if (valid) {
       try {
         setIsLoading(true);
+        const profile = await createProfile(
+          pathogen.publicKey,
+          testResult,
+          DateTime.fromFormat(dateString, 'yyyy-LL-dd'),
+          age,
+        );
+        console.log('PROFILE CREATED:::');
+        console.log(profile);
       } catch (e) {
+        console.log(e);
         Swal.fire({
           icon: 'error',
           text: `Something went wrong creating this pathogen: ${e}`,
