@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 import SolanaCircleLogo from '../../../assets/images/solana_circle_logo.svg';
 import useCreateProfile from '../../../hooks/api/useCreateProfile';
+import useProfiles from '../../../hooks/api/useProfiles';
 import { TestResult } from '../../../types';
 import styles from './styles.module.scss';
 
@@ -25,8 +26,20 @@ const prettyPrintPathogen = (pathogen: any) => {
       ).toFormat('yyyy-LL-dd'),
     },
   };
-
   return JSON.stringify(parsedPathogen, null, 2);
+};
+
+const prettyPrintProfiles = (profiles: any[]) => {
+  const parsedProfiles = profiles.map(profile => ({
+    ...profile,
+    account: {
+      ...profile.account,
+      latestTestResultDate: DateTime.fromMillis(
+        profile.account.latestTestResultDate.toNumber(),
+      ).toFormat('yyyy-LL-dd'),
+    },
+  }));
+  return JSON.stringify(parsedProfiles, null, 2);
 };
 
 type Props = {
@@ -35,6 +48,7 @@ type Props = {
 
 const Pathogen = ({ pathogen }: Props) => {
   const { createProfile } = useCreateProfile();
+  const { profiles } = useProfiles(pathogen.publicKey);
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -79,16 +93,13 @@ const Pathogen = ({ pathogen }: Props) => {
     if (valid) {
       try {
         setIsLoading(true);
-        const profile = await createProfile(
+        await createProfile(
           pathogen.publicKey,
           testResult,
           DateTime.fromFormat(dateString, 'yyyy-LL-dd'),
           age,
         );
-        console.log('PROFILE CREATED:::');
-        console.log(profile);
       } catch (e) {
-        console.log(e);
         Swal.fire({
           icon: 'error',
           text: `Something went wrong creating this pathogen: ${e}`,
@@ -161,6 +172,8 @@ const Pathogen = ({ pathogen }: Props) => {
         <div className={styles['data-container']}>
           <h1>pathogen data</h1>
           <pre id='json'>{prettyPrintPathogen(pathogen)}</pre>
+          <h1>profile data</h1>
+          <pre id='json'>{prettyPrintProfiles(profiles)}</pre>
         </div>
       </CSSTransition>
       <Modal
@@ -173,6 +186,7 @@ const Pathogen = ({ pathogen }: Props) => {
           setIsModalVisible(false);
           clearState();
         }}
+        confirmLoading={isLoading}
       >
         {isLoading ? (
           <div className={styles['loader-container']}>
