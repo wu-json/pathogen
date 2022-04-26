@@ -48,7 +48,7 @@ type Props = {
 
 const Pathogen = ({ pathogen }: Props) => {
   const { createProfile } = useCreateProfile();
-  const { profiles } = useProfiles(pathogen.publicKey);
+  const { profiles, setProfiles } = useProfiles(pathogen.publicKey);
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -93,12 +93,13 @@ const Pathogen = ({ pathogen }: Props) => {
     if (valid) {
       try {
         setIsLoading(true);
-        await createProfile(
+        const profile = await createProfile(
           pathogen.publicKey,
           testResult,
           DateTime.fromFormat(dateString, 'yyyy-LL-dd'),
           age,
         );
+        setProfiles([profile, ...profiles]);
       } catch (e) {
         Swal.fire({
           icon: 'error',
