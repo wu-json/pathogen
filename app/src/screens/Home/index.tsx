@@ -39,8 +39,11 @@ const Home = () => {
               public health data in exchange for Solana.
             </h2>
             <h2>
-              I built this for my senior thesis at Yale University, and the
-              source code can be found{' '}
+              I built this for my{' '}
+              <a href='https://github.com/wu-json/pathogen/blob/main/final-submission/thesis.pdf'>
+                senior thesis
+              </a>{' '}
+              at Yale University, and the source code can be found{' '}
               <a href='https://github.com/wu-json/pathogen'>here.</a>
             </h2>
           </div>
